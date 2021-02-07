@@ -28,7 +28,7 @@ int		ft_get_nbr_len(int nbr, int base)
 	return (len);
 }
 
-int	ft_putchar(char c)
+int		ft_putchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
@@ -52,7 +52,7 @@ void	ft_putnbr(int n)
 		ft_putchar(n + '0');
 }
 
-int ft_putnbr_di(va_list ap)
+int		ft_putnbr_di(va_list ap)
 {
 	int nbr;
 
@@ -87,6 +87,8 @@ int		ft_printf(char *format, ...)
     va_list ap;
 	int len;
 
+	if (!format)
+		return (-1);
 	va_start(ap, format);
 	len = ft_print_all(ap, format);
 	va_end(ap);
@@ -97,7 +99,7 @@ int		main()
 {
 	int i = 0;
 	int j = 0;
-	char test_str[] = "test %d number";
+	char *test_str = 0;
 
 	// printf("FT_PRINTF: ");
     i = ft_printf(test_str, 123);
