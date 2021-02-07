@@ -1,2 +1,2 @@
-# printf
-21school project ft_printf
+# ft_printf
+my project ft_printf
