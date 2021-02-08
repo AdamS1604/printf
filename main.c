@@ -61,28 +61,42 @@ int		ft_putnbr_di(va_list ap)
 	return (ft_get_nbr_len(nbr, 10));
 }
 
-int		ft_print_all(va_list ap, char *format)
+int ft_parser(va_list ap, const char **format)
 {
 	int len;
 
 	len = 0;
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			if ((*format == 'd') || (*format == 'i'))
-				len += ft_putnbr_di(ap);
-
-			format++;
-		}
-		else
-			len += ft_putchar(*(format++));
-	}
+	(*format)++;
+	if ((**format == 'd') || (**format == 'i'))
+		len += ft_putnbr_di(ap);
+	else if (**format == '%')
+		len += ft_putchar('%');
+	// или так - или выводить не по символьно а по строкам (может объединить это условие и условие выше?)
+	else
+		len += ft_putchar('%');
+	//чтобы не зайти за строку если % последний символ
+	if (**format != '\0')
+		(*format)++;
 	return (len);
 }
 
-int		ft_printf(char *format, ...)
+int		ft_print_all(va_list ap, const char *format)
+{
+	t_flags flags;
+	int len;
+
+	len = 0;
+	while (*format)
+		if ((*format == '%')) // && следуюий символ не конец строки
+			// if ((ft_parser(ap, &format)) < 0)
+			// 	return (-1); ???
+			len += ft_parser(ap, &format);
+		else
+			len += ft_putchar(*(format++));
+	return (len);
+}
+
+int		ft_printf(const char *format, ...)
 {
     va_list ap;
 	int len;
@@ -90,6 +104,7 @@ int		ft_printf(char *format, ...)
 	if (!format)
 		return (-1);
 	va_start(ap, format);
+	//если ошибка с маллоком то len = -1 (сделать это)
 	len = ft_print_all(ap, format);
 	va_end(ap);
 	return (len);
@@ -99,16 +114,18 @@ int		main()
 {
 	int i = 0;
 	int j = 0;
-	char *test_str = 0;
+	char test_str[] = "test %t7g4s test";
 
+	// ft_printf
 	// printf("FT_PRINTF: ");
     i = ft_printf(test_str, 123);
     // printf(" | RETURN: %d", i);
 	printf("\n");
 
+	// printf
 	// printf("PRINTF   : ");
 	j = printf(test_str, 123);
-	printf("\n");
     // printf(" | RETURN: %d", j);
+	printf("\n");
     return (0);
 }
