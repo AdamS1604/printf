@@ -1,71 +1,29 @@
-#include <stdio.h>
-#include <stdarg.h>
-// #include <io.h>
-#include <unistd.h>
+#include "main.h"
 
-
-typedef struct t_flags
+void ft_init_flags(t_flags *flags)
 {
-	int test;
-} t_flags;
+	flags->type = '0';     // char ex: d i u x X
+	flags->accuracy = 0;   //number
+	flags->width = 0;      // number
+	flags->percent = 0;    // 1 | 0
+	flags->minus = 0;      // 1 | 0
+	flags->space = 0;      // 1 | 0
+	flags->zero = 0;       // 1 | 0
+}
 
-int		ft_get_nbr_len(int nbr, int base)
+
+void ft_parser(const char **format, t_flags *flags)
+{
+
+}
+
+int ft_handler_ap(va_list ap, const char **format)
 {
 	int len;
-	int flag;
+	//t_flags flags
 
 	len = 0;
-	flag = 0;
-	if (nbr < 0)
-		flag++;
-	while (nbr)
-	{
-		len++;
-		nbr /= base;
-	}
-	if (flag)
-		len++;
-	return (len);
-}
-
-int		ft_putchar(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-void	ft_putnbr(int n)
-{
-	if (n < 0)
-	{
-		ft_putchar('-');
-		if (n <= -10)
-			ft_putnbr(n / -10);
-		ft_putchar(-(n % 10) + '0');
-	}
-	else if (n >= 10)
-	{
-		ft_putnbr(n / 10);
-		ft_putchar((n % 10) + '0');
-	}
-	else
-		ft_putchar(n + '0');
-}
-
-int		ft_putnbr_di(va_list ap)
-{
-	int nbr;
-
-	nbr = va_arg(ap, int);
-	ft_putnbr(nbr);
-	return (ft_get_nbr_len(nbr, 10));
-}
-
-int ft_parser(va_list ap, const char **format)
-{
-	int len;
-
-	len = 0;
+	// ft_parse()...
 	(*format)++;
 	if ((**format == 'd') || (**format == 'i'))
 		len += ft_putnbr_di(ap);
@@ -90,7 +48,7 @@ int		ft_print_all(va_list ap, const char *format)
 		if ((*format == '%')) // && следуюий символ не конец строки
 			// if ((ft_parser(ap, &format)) < 0)
 			// 	return (-1); ???
-			len += ft_parser(ap, &format);
+			len += ft_handler_ap(ap, &format);
 		else
 			len += ft_putchar(*(format++));
 	return (len);
@@ -114,7 +72,7 @@ int		main()
 {
 	int i = 0;
 	int j = 0;
-	char test_str[] = "test %t7g4s test";
+	char test_str[] = "test %d test";
 
 	// ft_printf
 	// printf("FT_PRINTF: ");
