@@ -1,41 +1,34 @@
 #include "main.h"
 
-void ft_init_flags(t_flags **flags)
+void ft_init_spec(t_spec **spec)
 {
-	(*flags)->type = '0';     // char ex: d i u x X
-	(*flags)->accuracy = 0;   //number
-	(*flags)->width = 0;      // number
-	(*flags)->percent = 0;    // 1 | 0
-	(*flags)->minus = 0;      // 1 | 0
-	(*flags)->space = 0;      // 1 | 0
-	(*flags)->zero = 0;       // 1 | 0
-	(*flags)->error = 0;
+	(*spec)->flag = 'x';     // x -none '0'/'-'/' '
+	(*spec)->width = 0;
+	(*spec)->accuracy = 0;
+	(*spec)->type = '0';     // char ex: d i u x X
 }
 
-void ft_parser(const char **format, t_flags *flags)
+void ft_parser(const char **format, t_spec *spec)
 {
 	(*format)++;
-	ft_init_flags(&flags);
+	ft_init_spec(&spec);
+	// объединить все типы в одно условие?
 	if ((**format == 'd') || (**format == 'i'))
-		flags->type = 'd';
+		spec->type = 'd';
 	else if (**format == '%')
-		flags->percent = 1;
-	else //if (**format == '\0')
-		flags->error = 1;
+		spec->type = '%';
 }
 
 int ft_handler_ap(va_list ap, const char **format)
 {
 	int len;
-	t_flags flags;
+	t_spec spec;
 
-	ft_parser(format, &flags);
-	if (flags.type == 'd')
+	ft_parser(format, &spec);
+	if (spec.type == 'd') // || (spec.type == 'i')
 		len += ft_putnbr_di(ap);
-	else if (flags.percent == 1)
+	else if (spec.type == 1)
 		len += ft_putchar('%');
-	else if (flags.error == 1)
-		return (-1);
 
 	if (**format != '\0')
 		(*format)++;
@@ -44,13 +37,13 @@ int ft_handler_ap(va_list ap, const char **format)
 
 int		ft_print_all(va_list ap, const char *format)
 {
-	t_flags flags;
 	int len;
 	int tmp;
 
 	len = 0;
 	while (*format)
 		if ((*format == '%'))
+			//??? error handling how to do it here?
 			if ((tmp = ft_handler_ap(ap, &format)) == -1)
 				return (-1);
 			else 
@@ -68,28 +61,25 @@ int		ft_printf(const char *format, ...)
 	if (!format)
 		return (-1);
 	va_start(ap, format);
-	//если ошибка с маллоком то len = -1 (сделать это)
 	len = ft_print_all(ap, format);
 	va_end(ap);
 	return (len);
 }
 
-int		main()
+int		main(void)
 {
 	int i = 0;
 	int j = 0;
-	char test_str[] = "%z";
+	char test_str[] = "test %d number";
 
-	// ft_printf
-	// printf("FT_PRINTF: ");
-    i = ft_printf(test_str, 3451);
-    // printf(" | RETURN: %d", i);
+	// my
+    i = ft_printf(test_str, 1);
+    printf(" | RETURN: %d", i);
 	printf("\n");
 
-	// printf
-	// printf("PRINTF   : ");
-	j = printf(test_str, 3451);
-    // printf(" | RETURN: %d", j);
+	// standart
+	j = printf(test_str, 1);
+    printf(" | RETURN: %d", j);
 	printf("\n");
     return (0);
 }

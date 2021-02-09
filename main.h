@@ -6,17 +6,13 @@
 // #include <io.h>  // win
 # include <unistd.h> // wsl
 
-typedef struct t_flags
+typedef struct t_spec
 {
+	char flag;      // '-' '0' ' '
+	int width;      // number or -1 (*)
+	int accuracy;   // number or -1 (*)
 	char type;      // char ex: d i u x X
-	int accuracy;   //number
-	int width;      // number
-	int percent;    // 1 | 0
-	int minus;      // 1 | 0
-	int space;      // 1 | 0
-	int zero;       // 1 | 0
-	int error;
-} t_flags;
+} t_spec;
 
 int		ft_get_nbr_len(int nbr, int base);
 int		ft_putchar(char c);
