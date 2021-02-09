@@ -52,3 +52,13 @@ int		ft_putnbr_di(va_list ap)
 	ft_putnbr(nbr);
 	return (ft_get_nbr_len(nbr, 10));
 }
+
+char    *ft_strchr(const char *s, int c)
+{
+    while (*s)
+        if(*s++ == (char)c)
+            return ((char *)s - 1);
+    if (c == '\0')
+        return ((char *)s);
+    return (NULL);
+}

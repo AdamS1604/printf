@@ -10,13 +10,16 @@ void ft_init_spec(t_spec **spec)
 
 void ft_parser(const char **format, t_spec *spec)
 {
-	(*format)++;
-	ft_init_spec(&spec);
-	// объединить все типы в одно условие?
-	if ((**format == 'd') || (**format == 'i'))
-		spec->type = 'd';
-	else if (**format == '%')
-		spec->type = '%';
+	(*format)++;         // skip %
+	ft_init_spec(&spec); // initialize spec
+
+	// while (**format)
+	if (ft_strchr("-0 ", **format))
+		spec->flag = **format;
+	else if (ft_strchr("diucspxX%", **format))
+		spec->type = **format;
+	// else
+	// 	break;
 }
 
 int ft_handler_ap(va_list ap, const char **format)
@@ -25,7 +28,7 @@ int ft_handler_ap(va_list ap, const char **format)
 	t_spec spec;
 
 	ft_parser(format, &spec);
-	if (spec.type == 'd') // || (spec.type == 'i')
+	if ((spec.type == 'd') || (spec.type == 'i'))
 		len += ft_putnbr_di(ap);
 	else if (spec.type == 1)
 		len += ft_putchar('%');
