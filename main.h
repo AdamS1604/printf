@@ -15,6 +15,7 @@ typedef struct t_flags
 	int minus;      // 1 | 0
 	int space;      // 1 | 0
 	int zero;       // 1 | 0
+	int error;
 } t_flags;
 
 int		ft_get_nbr_len(int nbr, int base);

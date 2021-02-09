@@ -9,6 +9,7 @@ void ft_init_flags(t_flags **flags)
 	(*flags)->minus = 0;      // 1 | 0
 	(*flags)->space = 0;      // 1 | 0
 	(*flags)->zero = 0;       // 1 | 0
+	(*flags)->error = 0;
 }
 
 void ft_parser(const char **format, t_flags *flags)
@@ -19,6 +20,8 @@ void ft_parser(const char **format, t_flags *flags)
 		flags->type = 'd';
 	else if (**format == '%')
 		flags->percent = 1;
+	else //if (**format == '\0')
+		flags->error = 1;
 }
 
 int ft_handler_ap(va_list ap, const char **format)
@@ -31,6 +34,8 @@ int ft_handler_ap(va_list ap, const char **format)
 		len += ft_putnbr_di(ap);
 	else if (flags.percent == 1)
 		len += ft_putchar('%');
+	else if (flags.error == 1)
+		return (-1);
 
 	if (**format != '\0')
 		(*format)++;
@@ -41,11 +46,15 @@ int		ft_print_all(va_list ap, const char *format)
 {
 	t_flags flags;
 	int len;
+	int tmp;
 
 	len = 0;
 	while (*format)
 		if ((*format == '%'))
-			len += ft_handler_ap(ap, &format);
+			if ((tmp = ft_handler_ap(ap, &format)) == -1)
+				return (-1);
+			else 
+				len += tmp;
 		else
 			len += ft_putchar(*(format++));
 	return (len);
@@ -69,7 +78,7 @@ int		main()
 {
 	int i = 0;
 	int j = 0;
-	char test_str[] = "test %d test";
+	char test_str[] = "%z";
 
 	// ft_printf
 	// printf("FT_PRINTF: ");
