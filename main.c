@@ -22,6 +22,7 @@ int		ft_flags_parser(const char **format, t_spec **spec)
 			(*spec)->flag = **format;
 		else if ((**format == ' ') && ((*spec)->space != 1))
 			(*spec)->space = 1;
+		len++;
 		(*format)++;
 	}
 	return (len);
