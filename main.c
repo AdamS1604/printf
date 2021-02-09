@@ -18,8 +18,6 @@ void ft_parser(const char **format, t_spec *spec)
 		spec->flag = **format;
 	else if (ft_strchr("diucspxX%", **format))
 		spec->type = **format;
-	// else
-	// 	break;
 }
 
 int ft_handler_ap(va_list ap, const char **format)
