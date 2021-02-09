@@ -30,7 +30,7 @@ void	ft_parser(const char **format, t_spec *spec)
 	ft_init_spec(&spec); // initialize spec
 
 	ft_flags_parser(format, &spec);
-
+	//parse width and accuracy
 	if (ft_strchr("diucspxX%", **format))
 		spec->type = **format;
 }
