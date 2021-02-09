@@ -1,26 +1,41 @@
 #include "main.h"
 
-void ft_init_spec(t_spec **spec)
+void	ft_init_spec(t_spec **spec)
 {
 	(*spec)->flag = 'x';     // x -none '0'/'-'/' '
+	(*spec)->space = 0;      
 	(*spec)->width = 0;
 	(*spec)->accuracy = 0;
 	(*spec)->type = '0';     // char ex: d i u x X
 }
 
-void ft_parser(const char **format, t_spec *spec)
+void ft_flags_parser(const char **format, t_spec **spec)
+{
+	while ((ft_strchr("-0 ", **format)))
+	{
+		if ((**format == '-') && ((*spec)->flag != '-'))
+			(*spec)->flag = **format;
+		else if ((**format == '0') && ((*spec)->flag != '-'))
+			(*spec)->flag = **format;
+		else if ((**format == ' ') && ((*spec)->space != 1))
+			(*spec)->space = 1;
+		(*format)++;
+	}
+
+}
+
+void	ft_parser(const char **format, t_spec *spec)
 {
 	(*format)++;         // skip %
 	ft_init_spec(&spec); // initialize spec
 
-	// while (**format)
-	if (ft_strchr("-0 ", **format))
-		spec->flag = **format;
-	else if (ft_strchr("diucspxX%", **format))
+	ft_flags_parser(format, &spec);
+
+	if (ft_strchr("diucspxX%", **format))
 		spec->type = **format;
 }
 
-int ft_handler_ap(va_list ap, const char **format)
+int		ft_handler_ap(va_list ap, const char **format)
 {
 	int len;
 	t_spec spec;
