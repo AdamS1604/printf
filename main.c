@@ -7,7 +7,6 @@ void	ft_init_spec(t_spec **spec)
 	(*spec)->width = 0;
 	(*spec)->accuracy = 0;
 	(*spec)->type = '0';     // char ex: d i u x X
-	(*spec)->valid = 0;
 }
 
 int		ft_flags_parser(const char **format, t_spec **spec)
@@ -37,16 +36,17 @@ int		ft_parser(const char *format, t_spec *spec)
 	len = ft_flags_parser(&format, &spec);
 	// parse width
 	// parse accuracy
+
+	// optimise this chunk
 	if (ft_strchr("diucspxX%", *format))
 	{
 		spec->type = *format;
-		return (len + 1);
+		return ((len + 1) * -1);
 	}
 	if ((*(format + 1)) == '\0')
-		return (-1);
+		return (0);
 	else
-		spec->valid = 1;
-	return (len + 1); // + 1 cuz %
+		return (len + 1); // + 1 cuz %
 }
 
 int		ft_handler(va_list ap, t_spec spec)
@@ -70,13 +70,15 @@ int		ft_handler_ap(va_list ap, const char **format)
 	len = 0;
 	parse = ft_parser(*format, &spec);
 
-	if (parse == -1)    // error
+	if (parse == 0)    // error
 		return (-1);
-	if (spec.valid == 1)
-		len += ft_putchar('%') + parse - 1;
-	else if (parse > 0)
+	else if (parse < 0)
 		len += ft_handler(ap, spec);
-	
+	else if (parse > 0)
+		len += ft_putchar('%') + parse - 1;
+
+	if (parse < 0)
+		parse *= -1;
 	(*format) += parse + 1;
 	return (len);
 }
@@ -116,7 +118,7 @@ int		main(void)
 {
 	int i = 0;
 	int j = 0;
-	char test_str[] = "test %z 123";
+	char test_str[] = "test %---d";
 
 	// my
     i = ft_printf(test_str, 1);

@@ -13,7 +13,6 @@ typedef struct t_spec
 	int width;      // number or -1 (*)
 	int accuracy;   // number or -1 (*)
 	char type;      // char ex: d i u x X
-	int valid;
 } t_spec;
 
 int		ft_get_nbr_len(int nbr, int base);
