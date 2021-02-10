@@ -72,6 +72,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 		{
 			(*spec)->accuracy = va_arg(ap, int);
 			len += 2; // 2 тк еще надо пропустить .
+			(*format)--;
 		}
 		else
 		{
@@ -199,7 +200,8 @@ int		main(void)
 	// ft_test("%.0d");
 	// ft_test("%.2d");
 	// ft_test("%.22d");
-	ft_test("%.0000012d");
+	// ft_test("%.0000012d");
+	ft_test("%.*d");
 
     return (0);
 }
