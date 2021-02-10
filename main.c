@@ -6,13 +6,12 @@ void	ft_init_spec(t_spec **spec)
 	(*spec)->space = 0;      
 	(*spec)->width = 0;
 	(*spec)->accuracy = 0;
-	(*spec)->type = '0';     // char ex: d i u x X
+	(*spec)->type = '0';     // char ex: d i u x X 
 }
 
 int		ft_flags_parser(const char **format, t_spec **spec)
 {
 	int len;
-
 	len = 0;
 	while ((ft_strchr("-0 ", **format)))
 	{
@@ -38,7 +37,7 @@ int		ft_parser(const char *format, t_spec *spec)
 	// parse width
 	// parse accuracy
 
-	// optimise this chunk
+	// TODO: optimise this code
 	if (ft_strchr("diucspxX%", *format))
 	{
 		spec->type = *format;
@@ -57,7 +56,7 @@ int		ft_handler(va_list ap, t_spec spec)
 	len = 0;
 	if ((spec.type == 'd') || (spec.type == 'i'))
 		len += ft_putnbr_di(ap);
-	else if (spec.type == 1)
+	else if (spec.type == '%')
 		len += ft_putchar('%');
 	return (len);
 }
@@ -93,7 +92,7 @@ int		ft_print_all(va_list ap, const char *format)
 	while (*format)
 		if ((*format == '%'))
 			//??? error handling how to do it here?
-			if ((tmp = ft_handler_ap(ap, &format)) == -1)
+			if ((*(format + 1) == '\0') || ((tmp = ft_handler_ap(ap, &format)) == -1))
 				return (-1);
 			else 
 				len += tmp;
@@ -115,20 +114,33 @@ int		ft_printf(const char *format, ...)
 	return (len);
 }
 
-int		main(void)
+void ft_test(char *str)
 {
 	int i = 0;
 	int j = 0;
-	char test_str[] = "test %---d";
 
 	// my
-    i = ft_printf(test_str, 1);
-    printf(" | RETURN: %d", i);
+	i = ft_printf(str, 5);
+	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(test_str, 1);
-    printf(" | RETURN: %d", j);
+	j = printf(str, 5);
+	printf(" | RETURN: %d", j);
 	printf("\n");
+
+	printf("\n");
+}
+
+int		main(void)
+{
+	ft_test("%");
+	ft_test("%%");
+	ft_test("%%%");
+	ft_test("%d");
+	ft_test("%z");
+	ft_test("%z 123");
+	ft_test("test %d");
+
     return (0);
 }

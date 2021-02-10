@@ -6,6 +6,7 @@
 // #include <io.h>  // win
 # include <unistd.h> // wsl
 
+
 typedef struct t_spec
 {
 	char flag;      // '-' '0'

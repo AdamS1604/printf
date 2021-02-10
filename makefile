@@ -5,6 +5,7 @@ SRC = main.c main_utils.c
 all: clean
 	gcc $(SRC) -o main
 
+
 # Debug file
 
 debug: clean
