@@ -64,9 +64,10 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 			num = ft_atoi(*format);
 			(*spec)->accuracy = num;
 			len += ft_get_nbr_len(num, 10); // + 1 тк еще надо пропустить .
+			(*format)++;
 		}
 	(*format) += len;
-	return(len + 1);
+	return(len);
 }
 
 int		ft_parser(va_list ap, const char *format, t_spec *spec)
