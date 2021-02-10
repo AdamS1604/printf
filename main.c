@@ -53,6 +53,8 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 	int num;
 
 	len = 0;
+	// TODO: optimise code
+	// FIXME: ERROR
 	if (**format == '.')
 		if (*(++(*format)) == '*')
 		{
@@ -63,7 +65,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 		{
 			num = ft_atoi(*format);
 			(*spec)->accuracy = num;
-			len += ft_get_nbr_len(num, 10); // + 1 тк еще надо пропустить .
+			len += ft_get_nbr_len(num, 10) + 1; // + 1 тк еще надо пропустить .
 			(*format)++;
 		}
 	(*format) += len;
@@ -154,6 +156,8 @@ void	ft_test(char *str)
 	int i = 0;
 	int j = 0;
 
+	printf("\n");
+
 	// my
 	i = ft_printf(str, 10, 5);
 	printf(" | RETURN: %d", i);
@@ -179,7 +183,11 @@ int		main(void)
 	// ft_test("% d 123");
 	// ft_test("%       d 123");
 	// ft_test("%  0-  12d");
-	ft_test("%.5d");
+	ft_test("%.d");
+	ft_test("%.0d");
+	ft_test("%.2d");
+	ft_test("%.22d");
+	ft_test("%d");
 
     return (0);
 }
