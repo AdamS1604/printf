@@ -63,10 +63,10 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 		{
 			num = ft_atoi(*format);
 			(*spec)->accuracy = num;
-			len += ft_get_nbr_len(num, 10); // + 1 тк еще надо пропустить .
+			len += ft_get_nbr_len(num, 10) + 1; // + 1 тк еще надо пропустить .
 		}
-	(*format) += len;
-	return(len + 1);
+	(*format) += len - 1;
+	return(len);
 }
 
 int		ft_parser(va_list ap, const char *format, t_spec *spec)
@@ -178,7 +178,7 @@ int		main(void)
 	// ft_test("% d 123");
 	// ft_test("%       d 123");
 	// ft_test("%  0-  12d");
-	ft_test("%.5d");
+	ft_test("%.*d");
 
     return (0);
 }
