@@ -47,6 +47,19 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 	return (len);
 }
 
+int		ft_zero_len(const char *format)
+{
+	int len;
+
+	len = 0;
+	while (*format == '0')
+	{
+		format++;
+		len++;
+	}
+	return (len);
+}
+
 int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 {
 	int len;
@@ -54,7 +67,6 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 
 	len = 0;
 	// TODO: optimise code
-	// FIXME: ERROR
 	if (**format == '.')
 		if (*(++(*format)) == '*')
 		{
@@ -65,8 +77,8 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 		{
 			num = ft_atoi(*format);
 			(*spec)->accuracy = num;
-			len += ft_get_nbr_len(num, 10) + 1; // + 1 тк еще надо пропустить .
-			(*format)++;
+			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format) + 1; // + 1 тк еще надо пропустить .
+			(*format)--;
 		}
 	(*format) += len;
 	return(len);
@@ -183,11 +195,11 @@ int		main(void)
 	// ft_test("% d 123");
 	// ft_test("%       d 123");
 	// ft_test("%  0-  12d");
-	ft_test("%.d");
-	ft_test("%.0d");
-	ft_test("%.2d");
-	ft_test("%.22d");
-	ft_test("%d");
+	// ft_test("%.d");
+	// ft_test("%.0d");
+	// ft_test("%.2d");
+	// ft_test("%.22d");
+	ft_test("%.0000012d");
 
     return (0);
 }
