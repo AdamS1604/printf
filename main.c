@@ -5,7 +5,7 @@ void	ft_init_spec(t_spec **spec)
 	(*spec)->flag = '_';     // x -none '0'/'-'/' '
 	(*spec)->space = 0;      
 	(*spec)->width = 0;
-	(*spec)->accuracy = 0;
+	(*spec)->accuracy = -1;
 	(*spec)->type = '_';     // char ex: d i u x X 
 }
 
@@ -47,6 +47,28 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 	return (len);
 }
 
+int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
+{
+	int len;
+	int num;
+
+	len = 0;
+	if (**format == '.')
+		if (*(++(*format)) == '*')
+		{
+			(*spec)->accuracy = va_arg(ap, int);
+			len += 2; // 2 тк еще надо пропустить .
+		}
+		else
+		{
+			num = ft_atoi(*format);
+			(*spec)->accuracy = num;
+			len += ft_get_nbr_len(num, 10) + 1; // + 1 тк еще надо пропустить .
+		}
+	(*format) += len - 1;
+	return(len);
+}
+
 int		ft_parser(va_list ap, const char *format, t_spec *spec)
 {
 	int len;
@@ -54,7 +76,7 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 	ft_init_spec(&spec);
 	len = ft_flags_parser(&format, &spec);
 	len += ft_width_parser(ap, &format, &spec);
-	// parse accuracy
+	len += ft_accuracy_parser(ap, &format, &spec);
 	if (ft_strchr("diucspxX%", *format))
 		spec->type = *format;
 	else if ((*(format + 1)) == '\0')
@@ -126,7 +148,7 @@ int		ft_printf(const char *format, ...)
 	return (len);
 }
 
-void ft_test(char *str)
+void	ft_test(char *str)
 {
 	int i = 0;
 	int j = 0;
@@ -156,7 +178,7 @@ int		main(void)
 	// ft_test("% d 123");
 	// ft_test("%       d 123");
 	// ft_test("%  0-  12d");
-	ft_test("%*5d");
+	ft_test("%.*d");
 
     return (0);
 }
