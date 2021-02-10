@@ -30,9 +30,8 @@ int		ft_flags_parser(const char **format, t_spec **spec)
 int		ft_parser(const char *format, t_spec *spec)
 {
 	int len;
-	format++;         // skip %
-	ft_init_spec(&spec); // initialize spec
-
+	
+	ft_init_spec(&spec);
 	len = ft_flags_parser(&format, &spec);
 	// parse width
 	// parse accuracy
@@ -62,7 +61,7 @@ int		ft_handler_ap(va_list ap, const char **format)
 	t_spec spec;
 
 	len = 0;
-	parse = ft_parser(*format, &spec);
+	parse = ft_parser(++(*format), &spec);
 
 	if (parse == 0)
 		return (-1);
@@ -73,7 +72,7 @@ int		ft_handler_ap(va_list ap, const char **format)
 
 	if (parse < 0)
 		parse *= -1;
-	(*format) += parse + 1;
+	(*format) += parse;
 	return (len);
 }
 
@@ -113,12 +112,12 @@ void ft_test(char *str)
 	int j = 0;
 
 	// my
-	i = ft_printf(str, 5);
+	i = ft_printf(str, 556);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(str, 5);
+	j = printf(str, 556);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
