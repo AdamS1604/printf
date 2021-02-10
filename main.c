@@ -27,13 +27,26 @@ int		ft_flags_parser(const char **format, t_spec **spec)
 	return (len);
 }
 
+int		ft_width_parser(const char **format, t_spec **spec)
+{
+	int len;
+	int num;
+
+	num = ft_atoi(*format);
+	if (num != 0)
+		(*spec)->width = num;
+	len = ft_get_nbr_len(num, 10);
+	(*format) += len;
+	return (len);
+}
+
 int		ft_parser(const char *format, t_spec *spec)
 {
 	int len;
 	
 	ft_init_spec(&spec);
 	len = ft_flags_parser(&format, &spec);
-	// parse width
+	len += ft_width_parser(&format, &spec);
 	// parse accuracy
 	if (ft_strchr("diucspxX%", *format))
 		spec->type = *format;
@@ -133,6 +146,9 @@ int		main(void)
 	ft_test("%z");
 	ft_test("%z 123");
 	ft_test("test %d");
+	ft_test("% d 123");
+	ft_test("%       d 123");
+	ft_test("%  0-  12d");
 
     return (0);
 }
