@@ -33,7 +33,7 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 	int num;
 
 	len = 0;
-
+	num = 0;
 	// TODO: Optimise this code
 	if (**format == '*')
 	{
@@ -100,16 +100,35 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 	return ((spec->type == '_') ? (len + 1) : ((len + 1) * -1));
 }
 
+void	ft_print_space(int i)
+{
+	while (i > 0)
+	{
+		ft_putchar(' ');
+		i--;
+	}
+}
+
+int		ft_handler_c(va_list ap, t_spec spec)
+{
+	if (spec.flag == '-')
+		ft_putchar(va_arg(ap, int));
+	if (spec.width != 0)
+		ft_print_space(spec.width - 1);
+	if (spec.flag != '-')
+		ft_putchar(va_arg(ap, int));
+	return ((spec.width != 0) ? spec.width : 1);
+}
+
 int		ft_handler(va_list ap, t_spec spec)
 {
-	int len;
-
-	len = 0;
+	if (spec.type == 'c') // TODO:
+		return (ft_handler_c(ap, spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
-		len += ft_putnbr_di(ap);
-	else if (spec.type == '%')
-		len += ft_putchar('%');
-	return (len);
+		return (ft_putnbr_di(ap));
+	if (spec.type == '%')
+		return (ft_putchar('%'));
+	return (0);
 }
 
 int		ft_handler_ap(va_list ap, const char **format)
@@ -172,12 +191,12 @@ void	ft_test(char *str)
 	printf("\n");
 
 	// my
-	i = ft_printf(str, 10, 5);
+	i = ft_printf(str, 10,'a');
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(str, 10, 5);
+	j = printf(str, 10,'a');
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -201,7 +220,16 @@ int		main(void)
 	// ft_test("%.2d");
 	// ft_test("%.22d");
 	// ft_test("%.0000012d");
-	ft_test("%.*d");
+	// ft_test("%.*d");
+
+	// c - char tests
+	// ft_test("%c");
+	// ft_test("%     c");
+	// ft_test("%    -0-0-0 0- c");
+	// ft_test("%   10c");
+	// ft_test("%   -10c");
+	// ft_test("%*c");
+	ft_test("%   -*c");
 
     return (0);
 }
