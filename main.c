@@ -111,6 +111,8 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 	len = ft_flags_parser(&format, &spec);
 	len += ft_width_parser(ap, &format, &spec);
 	len += ft_accuracy_parser(ap, &format, &spec);
+	if (*format == '\0')
+		return (0);
 	if (ft_strchr("diucspxX%", *format))
 		spec->type = *format;
 	else if ((*(format + 1)) == '\0')
@@ -220,6 +222,35 @@ int		ft_handler(va_list ap, t_spec spec)
 	return (0);
 }
 
+int		ft_format_out(const char **format, t_spec spec)
+{
+	int len;
+
+	len = ft_putchar('%');
+	if (**format == ' ')
+		len += ft_putchar(' ');
+	while (**format == ' ')
+		(*format)++;
+	while (**format != '\0')
+	{
+		if (**format == '*')
+		{
+			ft_putnbr(spec.width);
+			len += ft_get_nbr_len(spec.width, 10);
+		}
+		else if ((**format == '.') && (*(++(*format)) == '*'))
+		{
+			ft_putchar('.');
+			ft_putnbr(spec.accuracy);
+			len += ft_get_nbr_len(spec.accuracy, 10) + 1;
+		}
+		else
+			len += ft_putchar(**format);
+		(*format)++;
+	}
+	return (len);
+}
+
 int		ft_handler_ap(va_list ap, const char **format)
 {
 	int len;
@@ -234,10 +265,12 @@ int		ft_handler_ap(va_list ap, const char **format)
 	else if (parse < 0)
 		len += ft_handler(ap, spec);
 	else if (parse > 0)
-		len += ft_putchar('%') + parse - 1;
+		len += ft_format_out(format, spec);
 
 	if (parse < 0)
 		parse *= -1;
+	else if (parse > 0)
+		return (len);
 	(*format) += parse;
 	return (len);
 }
@@ -280,12 +313,12 @@ void	ft_test(char *str)
 	printf("\n");
 
 	// my
-	i = ft_printf(str, -10);
+	i = ft_printf(str, 2, 3);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(str, -10);
+	j = printf(str, 2, 3);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -344,7 +377,7 @@ int		main(void)
 	// ft_test("%.0000d");
 	// ft_test("%.003d");
 	// ft_test("%.3d");
-	ft_test("%.5d");
+	ft_test("%123");
 	// ft_test("%.*d");
 
     return (0);

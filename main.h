@@ -19,7 +19,6 @@ typedef struct t_spec
 int		ft_get_nbr_len(int nbr, int base);
 int		ft_putchar(char c);
 void	ft_putnbr(int n);
-int		ft_putnbr_di(va_list ap);
 char    *ft_strchr(const char *s, int c);
 int		ft_atoi(const char *str1);
 
