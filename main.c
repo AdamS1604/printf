@@ -123,10 +123,10 @@ int		ft_putstr(char const *s)
 	return (i);
 }
 
-void	ft_print_space(int i)
+void	ft_print_char_times(int i, char c)
 {
 	while (i-- > 0)
-		ft_putchar(' ');
+		ft_putchar(c);
 }
 
 int		ft_handler_c(va_list ap, t_spec spec)
@@ -134,7 +134,7 @@ int		ft_handler_c(va_list ap, t_spec spec)
 	if (spec.flag == '-')
 		ft_putchar(va_arg(ap, int));
 	if (spec.width != 0)
-		ft_print_space(spec.width - 1);
+		ft_print_char_times(spec.width - 1, ' ');
 	if (spec.flag != '-')
 		ft_putchar(va_arg(ap, int));
 	return ((spec.width != 0) ? spec.width : 1);
@@ -150,7 +150,7 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	if (spec.flag == '-')
 		ft_putstr(str);
 	if (spec.width != 0)
-		ft_print_space(spec.width - str_len);
+		ft_print_char_times(spec.width - str_len, ' ');
 	if (spec.flag != '-')
 		ft_putstr(str);
 	return ((str_len > spec.width) ? str_len : spec.width);
