@@ -46,12 +46,16 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 	num = 0;
 	// TODO: Optimise this code
 	if (**format == '*')
-	{
 		(*spec)->width = va_arg(ap, int);
-		len += 1;
-	}
 	else if ((num = ft_atoi(*format)) != 0) // Можно в width просто класть результат атои сразу
 		(*spec)->width = num;
+	else
+		return (0);
+	if ((*spec)->width < 0)
+	{
+		(*spec)->flag = '-';
+		(*spec)->width *= -1;
+	}
 	len += ft_get_nbr_len(num, 10);
 	(*format) += len;
 	return (len);
@@ -76,7 +80,6 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 	int num;
 
 	len = 0;
-	// TODO: optimise code
 	if (**format == '.')
 		if (*(++(*format)) == '*')
 		{
@@ -86,11 +89,17 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 		}
 		else
 		{
-			num = ft_atoi(*format);
+			if ((num = ft_atoi(*format)) != 0)
+				len++;
 			(*spec)->accuracy = num;
-			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format) + 1; // + 1 тк еще надо пропустить .
+			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format); // + 1 тк еще надо пропустить .
 			(*format)--;
 		}
+	if ((*spec)->accuracy < 0)
+	{
+		(*spec)->flag = '-';
+		(*spec)->accuracy *= -1;
+	}
 	(*format) += len;
 	return(len);
 }
@@ -123,10 +132,14 @@ int		ft_putstr(char const *s)
 	return (i);
 }
 
-void	ft_print_char_times(int i, char c)
+int		ft_print_char_times(int i, char c)
 {
+	int len;
+
+	len = i;
 	while (i-- > 0)
 		ft_putchar(c);
+	return (len);
 }
 
 int		ft_handler_c(va_list ap, t_spec spec)
@@ -156,14 +169,51 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
+int		ft_handler_d(va_list ap, t_spec spec)
+{
+	int len;
+	int nbr;
+	int nbr_len;
+
+	len = 0;
+	nbr = va_arg(ap, int);
+	nbr_len = ft_get_nbr_len(nbr, 10);
+
+	// space
+	if ((spec.space == 1) && !(nbr < 0))
+	{
+		spec.width--;
+		len += ft_putchar(' ');
+	}
+	// minus pretype
+	if ((nbr < 0) && (spec.flag != '_'))
+		nbr *= -ft_putchar('-');
+	if (spec.width > nbr_len)
+	{
+		//TODO: this can be optimised
+		if (spec.flag == '-')
+			ft_putnbr(nbr);
+		if (spec.flag == '0')
+			len += ft_print_char_times(spec.width - nbr_len, '0');
+		else
+			len += ft_print_char_times(spec.width - nbr_len, ' ');
+		if (spec.flag != '-')
+			ft_putnbr(nbr);
+	}
+	else
+		ft_putnbr(nbr);
+	len += nbr_len;
+	return (len);
+}
+
 int		ft_handler(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c') // done
 		return (ft_handler_c(ap, spec));
-	if (spec.type == 's') // in progress
+	if (spec.type == 's') // done
 		return (ft_handler_s(ap, spec));
-	if ((spec.type == 'd') || (spec.type == 'i'))
-		return (ft_putnbr_di(ap));
+	if ((spec.type == 'd') || (spec.type == 'i')) // in progress
+		return (ft_handler_d(ap, spec));
 	if (spec.type == '%')
 		return (ft_putchar('%'));
 	return (0);
@@ -229,12 +279,12 @@ void	ft_test(char *str)
 	printf("\n");
 
 	// my
-	i = ft_printf(str, 10, "string");
+	i = ft_printf(str, -10, -123);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(str, 10, "string");
+	j = printf(str, -10, -123);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -271,12 +321,30 @@ int		main(void)
 	// ft_test("%10c");
 	// ft_test("%-10c");
 
-	// s = string tests
+	// s - string tests
 	// ft_test("%s");
 	// ft_test("%10s");
 	// ft_test("%1s");
 	// ft_test("%-*s");
 	// ft_test("%*s");
+
+	// d - d an i tests
+	ft_test("%*d");
+	ft_test("% *d");
+	ft_test("% -0*d");
+	ft_test("% 1d");
+	ft_test("%      0  2d");
+	ft_test("%-4d");
+	ft_test("%d");
+
+	// accuracy ft fixing
+	// ft_test("%.d");
+	// ft_test("%.0d");
+	// ft_test("%.0000d");
+	// ft_test("%.003d");
+	// ft_test("%.3d");
+	// ft_test("%.13d");
+	// ft_test("%.*d");
 
     return (0);
 }

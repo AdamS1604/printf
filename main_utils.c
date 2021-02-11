@@ -7,6 +7,8 @@ int		ft_get_nbr_len(int nbr, int base)
 
 	len = 0;
 	flag = 0;
+	if (nbr == 0)
+		return (1);
 	if (nbr < 0)
 		flag++;
 	while (nbr)
@@ -19,7 +21,6 @@ int		ft_get_nbr_len(int nbr, int base)
 	return (len);
 }
 
-// this function also returns 1 (len of printed char)
 int		ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -42,15 +43,6 @@ void	ft_putnbr(int n)
 	}
 	else
 		ft_putchar(n + '0');
-}
-
-int		ft_putnbr_di(va_list ap)
-{
-	int nbr;
-
-	nbr = va_arg(ap, int);
-	ft_putnbr(nbr);
-	return (ft_get_nbr_len(nbr, 10));
 }
 
 char    *ft_strchr(const char *s, int c)
@@ -91,4 +83,3 @@ int		ft_atoi(const char *str1)
 	}
 	return (flag == 0 ? i : -i);
 }
-
