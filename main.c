@@ -44,7 +44,6 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 
 	len = 0;
 	num = 0;
-	// TODO: Optimise this code
 	if (**format == '*')
 		(*spec)->width = va_arg(ap, int);
 	else if ((num = ft_atoi(*format)) != 0) // Можно в width просто класть результат атои сразу
@@ -95,11 +94,11 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format); // + 1 тк еще надо пропустить .
 			(*format)--;
 		}
-	if ((*spec)->accuracy < 0)
-	{
-		(*spec)->flag = '-';
-		(*spec)->accuracy *= -1;
-	}
+	// if ((*spec)->accuracy < 0)
+	// {
+	// 	(*spec)->flag = '-';
+	// 	(*spec)->accuracy *= -1;
+	// }
 	(*format) += len;
 	return(len);
 }
