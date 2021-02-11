@@ -177,19 +177,21 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	len = 0;
 	nbr = va_arg(ap, int);
 	nbr_len = ft_get_nbr_len(nbr, 10);
-
-	// space
+	if (spec.accuracy >= nbr_len)
+	{
+		spec.width = spec.accuracy;
+		spec.flag = '0';
+		spec.width++;
+	}
 	if ((spec.space == 1) && !(nbr < 0))
 	{
 		spec.width--;
 		len += ft_putchar(' ');
 	}
-	// minus pretype
 	if ((nbr < 0) && (spec.flag != '_'))
 		nbr *= -ft_putchar('-');
 	if (spec.width > nbr_len)
 	{
-		//TODO: this can be optimised
 		if (spec.flag == '-')
 			ft_putnbr(nbr);
 		if (spec.flag == '0')
@@ -278,12 +280,12 @@ void	ft_test(char *str)
 	printf("\n");
 
 	// my
-	i = ft_printf(str, -10, -123);
+	i = ft_printf(str, -10);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(str, -10, -123);
+	j = printf(str, -10);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -328,13 +330,13 @@ int		main(void)
 	// ft_test("%*s");
 
 	// d - d an i tests
-	ft_test("%*d");
-	ft_test("% *d");
-	ft_test("% -0*d");
-	ft_test("% 1d");
-	ft_test("%      0  2d");
-	ft_test("%-4d");
-	ft_test("%d");
+	// ft_test("%*d");
+	// ft_test("% *d");
+	// ft_test("% -0*d");
+	// ft_test("% 1d");
+	// ft_test("%      0  2d");
+	// ft_test("%-4d");
+	// ft_test("%d");
 
 	// accuracy ft fixing
 	// ft_test("%.d");
@@ -342,7 +344,7 @@ int		main(void)
 	// ft_test("%.0000d");
 	// ft_test("%.003d");
 	// ft_test("%.3d");
-	// ft_test("%.13d");
+	ft_test("%.5d");
 	// ft_test("%.*d");
 
     return (0);
