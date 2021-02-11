@@ -1,5 +1,15 @@
 #include "main.h"
 
+size_t	ft_strlen(const char *str)
+{
+	int i;
+
+	i = 0;
+	while (*(str++))
+		i++;
+	return (i);
+}
+
 void	ft_init_spec(t_spec **spec)
 {
 	(*spec)->flag = '_';     // x -none '0'/'-'/' '
@@ -100,13 +110,23 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 	return ((spec->type == '_') ? (len + 1) : ((len + 1) * -1));
 }
 
+int		ft_putstr(char const *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (i);
+}
+
 void	ft_print_space(int i)
 {
-	while (i > 0)
-	{
+	while (i-- > 0)
 		ft_putchar(' ');
-		i--;
-	}
 }
 
 int		ft_handler_c(va_list ap, t_spec spec)
@@ -120,10 +140,28 @@ int		ft_handler_c(va_list ap, t_spec spec)
 	return ((spec.width != 0) ? spec.width : 1);
 }
 
+int		ft_handler_s(va_list ap, t_spec spec)
+{
+	char *str;
+	int str_len;
+
+	str = va_arg(ap, char*);
+	str_len = ft_strlen(str);
+	if (spec.flag == '-')
+		ft_putstr(str);
+	if (spec.width != 0)
+		ft_print_space(spec.width - str_len);
+	if (spec.flag != '-')
+		ft_putstr(str);
+	return ((str_len > spec.width) ? str_len : spec.width);
+}
+
 int		ft_handler(va_list ap, t_spec spec)
 {
-	if (spec.type == 'c') // TODO:
+	if (spec.type == 'c') // done
 		return (ft_handler_c(ap, spec));
+	if (spec.type == 's') // in progress
+		return (ft_handler_s(ap, spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
 		return (ft_putnbr_di(ap));
 	if (spec.type == '%')
@@ -191,12 +229,12 @@ void	ft_test(char *str)
 	printf("\n");
 
 	// my
-	i = ft_printf(str, 10,'a');
+	i = ft_printf(str, 10, "string");
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
-	j = printf(str, 10,'a');
+	j = printf(str, 10, "string");
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -205,6 +243,7 @@ void	ft_test(char *str)
 
 int		main(void)
 {
+	// old tests
 	// ft_test("%");
 	// ft_test("%%");
 	// ft_test("%%%");
@@ -229,7 +268,15 @@ int		main(void)
 	// ft_test("%   10c");
 	// ft_test("%   -10c");
 	// ft_test("%*c");
-	ft_test("%   -*c");
+	// ft_test("%10c");
+	// ft_test("%-10c");
+
+	// s = string tests
+	// ft_test("%s");
+	// ft_test("%10s");
+	// ft_test("%1s");
+	// ft_test("%-*s");
+	// ft_test("%*s");
 
     return (0);
 }
