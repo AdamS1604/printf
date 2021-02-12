@@ -1,4 +1,4 @@
-SRC = main.c ft_printf/*.c
+SRC = main.c ../ft_printf/*.c
 CFLAGS = -g
 OUT = main
 
