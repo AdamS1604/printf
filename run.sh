@@ -1,2 +1,3 @@
-make debug
+make
 ./main
+make clean

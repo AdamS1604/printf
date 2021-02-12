@@ -1,17 +1,9 @@
-SRC = main.c main_utils.c
-
-# All in one
+SRC = main.c ft_printf/*.c
+CFLAGS = -g
+OUT = main
 
 all: clean
-	gcc $(SRC) -o main
-
-
-# Debug file
-
-debug: clean
-	gcc -g $(SRC) -o main
-
-# ALL CLEANERS
+	@gcc $(CFLAGS) $(SRC) -o $(OUT)
 
 clean:
-	rm -f main
+	@rm -f $(OUT)

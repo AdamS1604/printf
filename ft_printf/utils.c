@@ -1,4 +1,46 @@
-#include "main.h"
+#include "ft_printf.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int i;
+
+	i = 0;
+	while (*(str++))
+		i++;
+	return (i);
+}
+
+int		ft_zero_len(const char *format)
+{
+	int len;
+
+	len = 0;
+	while (*format == '0')
+	{
+		format++;
+		len++;
+	}
+	return (len);
+}
+
+int		ft_print_char_times(int i, char c)
+{
+	int len;
+
+	len = i;
+	while (i-- > 0)
+		ft_putchar(c);
+	return (len);
+}
+
+void	ft_init_spec(t_spec **spec)
+{
+	(*spec)->flag = '_';     // x -none '0'/'-'/' '
+	(*spec)->space = 0;      
+	(*spec)->width = 0;
+	(*spec)->accuracy = -1;
+	(*spec)->type = '_';     // char ex: d i u x X 
+}
 
 int		ft_get_nbr_len(int nbr, int base)
 {
@@ -25,6 +67,19 @@ int		ft_putchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
+}
+
+int		ft_putstr(char const *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (i);
 }
 
 void	ft_putnbr(int n)
