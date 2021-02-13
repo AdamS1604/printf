@@ -23,6 +23,7 @@ void	ft_init_spec(t_spec **spec);
 int		ft_get_nbr_len(int nbr, int base);
 int		ft_putchar(char c);
 int		ft_putstr(char const *s);
+int		ft_putstr_len(int len, char *s);
 void	ft_putnbr(int n);
 char    *ft_strchr(const char *s, int c);
 int		ft_atoi(const char *str1);

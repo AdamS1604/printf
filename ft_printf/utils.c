@@ -82,6 +82,20 @@ int		ft_putstr(char const *s)
 	return (i);
 }
 
+int		ft_putstr_len(int len, char *s)
+{
+	size_t	i;
+	int str_len;
+
+	i = 0;
+
+	// idea: if len == -1 then output full string (len = ft_strlen(s))
+	str_len = ft_strlen(s);
+	while ((len > i) && (str_len--))
+		ft_putchar(s[i++]);
+	return (i);
+}
+
 void	ft_putnbr(int n)
 {
 	if (n < 0)

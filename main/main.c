@@ -24,17 +24,7 @@ void	ft_test(char *str)
 
 int		main(void)
 {
-	// ft_test("% 010.d");
-	// ft_test("% 010.2d");
-	// ft_test("% 10d");
-	// ft_test("%10.s");
-	ft_test("%.s");
-
-	// сделать функцию которая выводить только n символов строки
-
-	// if ((spec.accuracy < str_len) && (spec.accuracy != -1))
-	// занулить все символы которые не нужно выводить
-	// будет ли из- за этого лик?
+	ft_test("%-10.3s");
 
     return (0);
 }
