@@ -6,15 +6,14 @@ int		ft_handler_ap(va_list ap, const char **format)
 	int parse;
 	t_spec spec;
 
-	len = 0;
 	parse = ft_parser(ap, ++(*format), &spec);
 
 	if (parse == 0)
 		return (-1);
 	else if (parse < 0)
-		len += ft_handler(ap, spec);
+		len = ft_handler(ap, spec);
 	else if (parse > 0)
-		len += ft_format_out(format, spec);
+		len = ft_format_out(format, spec);
 
     // ???
 	if (parse < 0)

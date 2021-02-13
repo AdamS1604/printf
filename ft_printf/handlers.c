@@ -1,5 +1,18 @@
 #include "ft_printf.h"
 
+// TEST
+int		ft_test_putstr(int len, char *s)
+{
+	size_t	i;
+	int str_len;
+
+	i = 0;
+	str_len = ft_strlen(s);
+	while ((len > i) && (str_len--))
+		ft_putchar(s[i++]);
+	return (i);
+}
+
 int		ft_handler(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c') // done
@@ -31,23 +44,21 @@ int		ft_handler_s(va_list ap, t_spec spec)
 
 	str = va_arg(ap, char*);
 	str_len = ft_strlen(str);
+	// if ((spec.accuracy < str_len) && (spec.accuracy != -1))
+	// 	while (spec.accuracy-- > 0)
+	// 		ft_putchar(*(str++));
+
+	// тут достаточно одного условия?
 	if ((spec.accuracy < str_len) && (spec.accuracy != -1))
-	{
-		while (spec.accuracy > 0)
-		{
-			ft_putchar(*str);
-			str++;
-			spec.accuracy--;
-		}
-	}
+		str_len = spec.accuracy;
 	if (spec.flag == '-')
-		ft_putstr(str);
+		ft_test_putstr(str_len, str);
 	if (spec.width != 0)
 		ft_print_char_times(spec.width - str_len, ' ');
 	if (spec.flag != '-')
-		ft_putstr(str);
-	if ((spec.accuracy < str_len) && (spec.accuracy != -1))
-		return(spec.accuracy);
+		ft_test_putstr(str_len, str);
+	// if ((spec.accuracy < str_len) && (spec.accuracy != -1))
+	// 	return(spec.accuracy);
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
