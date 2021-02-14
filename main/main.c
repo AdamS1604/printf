@@ -9,13 +9,13 @@ void	ft_test(char *str)
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, "string");
+	i = ft_printf(str, "abc");
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, "string");
+	j = printf(str, "abc");
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -24,7 +24,7 @@ void	ft_test(char *str)
 
 int		main(void)
 {
-	ft_test("%-10.3s");
+	ft_test("%32s");
 
     return (0);
 }
