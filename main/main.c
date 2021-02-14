@@ -9,13 +9,13 @@ void	ft_test(char *str)
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 'A');
+	i = ft_printf(str, 123);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 'A');
+	j = printf(str, 123);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -24,7 +24,7 @@ void	ft_test(char *str)
 
 int		main(void)
 {
-	ft_test("%1.c");
+	ft_test("%12.4d");
 
     return (0);
 }
