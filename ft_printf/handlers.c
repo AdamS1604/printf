@@ -53,7 +53,7 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	nbr_len = ft_get_nbr_len(nbr, 10);
 	if (spec.accuracy >= nbr_len)
 	{
-		spec.width = spec.accuracy;
+		spec.width = spec.accuracy - 1;
 		spec.flag = '0';
 		spec.width++;
 	}

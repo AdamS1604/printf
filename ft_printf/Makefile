@@ -2,7 +2,7 @@ SRCS = *.c
 OBJS = $(SRCS:.c=.o)
 NAME = libftprintf.a
 
-all: $(NAME)
+all: clean $(NAME)
 
 $(NAME): $(OBJS)
 	ar -rcv $@ $^
