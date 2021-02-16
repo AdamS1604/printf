@@ -42,42 +42,7 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-// int		ft_handler_d(va_list ap, t_spec spec)
-// {
-// 	int len;
-// 	int nbr;
-// 	int nbr_len;
-// 	len = 0;
-// 	nbr = va_arg(ap, int);
-// 	nbr_len = ft_get_nbr_len(nbr, 10);
-// 	if (spec.accuracy > nbr_len)
-// 	{
-// 		spec.width = spec.accuracy;
-// 		spec.flag = '0';
-// 	}
-// 	if ((spec.space == 1) && !(nbr < 0))
-// 	{
-// 		spec.width--;
-// 		len += ft_putchar(' ');
-// 	}
-// 	if ((nbr < 0) && (spec.flag != '_'))
-// 		nbr *= -ft_putchar('-');
-// 	if (spec.width > nbr_len)
-// 	{
-// 		if (spec.flag == '-')
-// 			ft_putnbr(nbr);
-// 		if (spec.flag == '0')
-// 			len += ft_print_char_times(spec.width - nbr_len, '0');
-// 		else
-// 			len += ft_print_char_times(spec.width - nbr_len, ' ');
-// 		if (spec.flag != '-')
-// 			ft_putnbr(nbr);
-// 	}
-// 	else
-// 		ft_putnbr(nbr);
-// 	len += nbr_len;
-// 	return (len);
-// }
+//TODO: Check for leaks
 
 int		ft_minus(int *nbr)
 {
@@ -105,9 +70,7 @@ char	*ft_str_make(int i, int j, char **str, int minus)
 	return (new_str);
 }
 
-
-
-int		ft_handler_d(va_list ap, t_spec spec)
+char	*ft_nbr_to_str(va_list ap, t_spec spec)
 {
 	int nbr;			// number form ap
 	int nbr_len;		// length of number
@@ -124,9 +87,24 @@ int		ft_handler_d(va_list ap, t_spec spec)
 		nbr_str = ft_strjoin("-", nbr_str);
 	if (spec.accuracy > nbr_len)
 		nbr_len = spec.accuracy;
+	return (nbr_str);
+}
+
+int		ft_handler_d(va_list ap, t_spec spec)
+{
+	int len;
+	char *str;
 	
-	ft_putstr(nbr_str);
-	return (nbr_len + minus);
+	str = ft_nbr_to_str(ap, spec);
+	len = ft_strlen(str);
+
+	if (spec.flag == '-')
+		ft_putstr_len(len, str);
+	if (spec.width != 0)
+		ft_print_char_times(spec.width - len, ' ');
+	if (spec.flag != '-')
+		ft_putstr_len(len, str);
+	return ((len > spec.width) ? len : spec.width);
 }
 
 int		ft_format_out(const char **format, t_spec spec)
