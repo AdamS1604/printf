@@ -27,7 +27,7 @@ int		main(void)
 	// ft_test("% 0.d", -200);
 	// ft_test("%0 20.10d", -200);
 	// ft_test("%010.5d", 10);
-	ft_test("%3.1s", 0);
+	ft_test("%3s", 0);
 
 	//ft_printf("%-7i", -14)
 

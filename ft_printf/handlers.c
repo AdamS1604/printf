@@ -30,8 +30,11 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	int str_len;
 
 	str = va_arg(ap, char*);
-	// if (str == 0)
-	// 	str = "(null)";
+	if (str == 0)
+		if ((spec.accuracy >= 6) || (spec.accuracy == -1))
+			str = "(null)";
+		else
+			str = "";
 	str_len = ft_strlen(str);
 	if ((spec.accuracy < str_len) && (spec.accuracy != -1))
 		str_len = spec.accuracy;
