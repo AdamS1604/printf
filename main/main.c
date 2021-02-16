@@ -24,7 +24,13 @@ void	ft_test(char *str, int n)
 
 int		main(void)
 {
-	ft_test("%.20d", 200);
+	ft_test("% d", -200);        // good
+	ft_test("%d", -200);         // good
+	ft_test("% 10d", -200);      // good
+	ft_test("% 10.d", -200);     // good
+	// ft_test("% 0.d", -200);
+	// ft_test("%0 20.10d", -200);
+	// ft_test("%010.5d", 10);
 
     return (0);
 }

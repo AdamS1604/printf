@@ -42,7 +42,7 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-//TODO: Check for leaks
+// ! DEFEND LEAKS ALL
 
 int		ft_minus(int *nbr)
 {
@@ -71,16 +71,12 @@ char	*ft_str_make(int i, int j, char **str)
 	return (new_str);
 }
 
-char	*ft_nbr_to_str(va_list ap, t_spec spec)
+char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 {
-	int nbr;			// number form ap
 	int nbr_len;		// length of number
-	int minus;			// if number is negative
 	char *nbr_str;		// same number but positive and written to string
 	char *tmp;
 
-	nbr = va_arg(ap, int);
-	minus = ft_minus(&nbr);
 	nbr_str = ft_itoa(nbr);
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
@@ -90,21 +86,50 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec)
 
 int		ft_handler_d(va_list ap, t_spec spec)
 {
-	int len;
+	int str_len;
+	int nbr;
+	int minus;
 	char *str;
-	
-	str = ft_nbr_to_str(ap, spec);
-	len = ft_strlen(str);
 
-	if (spec.flag == '-')
-		ft_putstr_len(len, str);
-	if (spec.width != 0)
-		ft_print_char_times(spec.width - len, ' ');
-	if (spec.flag != '-')
-		ft_putstr_len(len, str);
+	nbr = va_arg(ap, int);
+	minus = ft_minus(&nbr);
+	str = ft_nbr_to_str(ap, spec, nbr);
+	str_len = ft_strlen(str);
+
+	if ((spec.space == 1) && (minus == 0))
+	{
+		str_len += ft_putchar(' ');
+	}
+	// minus
+	if ((minus == 1) && (spec.flag != '_'))
+		str_len += ft_putchar('-');
+	
+	// main
+	if (spec.width > str_len)
+	{
+		if (spec.flag == '-')
+			ft_putstr_len(str_len, str);
+		if (spec.flag == '0')
+			ft_print_char_times(spec.width - str_len - minus, '0');
+		else
+			ft_print_char_times(spec.width - str_len - minus, ' ');
+		if (minus == 1)
+			str_len += ft_putchar('-'); // remove +=
+		if (spec.flag != '-')
+			ft_putstr_len(str_len, str);
+	}
+	else
+	{
+		if (minus == 1)
+			str_len += ft_putchar('-');
+		ft_putstr_len(str_len, str);
+	}
+
 	free(str);
-	return ((len > spec.width) ? len : spec.width);
+	return ((str_len > spec.width) ? str_len : spec.width);
 }
+
+// ! DEFEND LEAKS ALL
 
 int		ft_format_out(const char **format, t_spec spec)
 {
