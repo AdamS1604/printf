@@ -54,18 +54,19 @@ int		ft_minus(int *nbr)
 	return (0);
 }
 
-char	*ft_str_make(int i, int j, char **str, int minus)
+char	*ft_str_make(int i, int j, char **str)
 {
 	int k;
 	char *new_str;
+	char *tmp;
 
 	k = 0;
-	new_str = malloc((sizeof(char) * j) + minus);
-	if (minus == 1)
-		new_str[k++] = '-';
+	new_str = malloc((sizeof(char) * j));
 	while (i--)
 		new_str[k++] = '0';
+	tmp = new_str;
 	new_str = ft_strjoin(new_str, *str);
+	free(tmp);
 	free(*str);
 	return (new_str);
 }
@@ -76,17 +77,14 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec)
 	int nbr_len;		// length of number
 	int minus;			// if number is negative
 	char *nbr_str;		// same number but positive and written to string
+	char *tmp;
 
 	nbr = va_arg(ap, int);
-	minus = ft_minus(&nbr); 
+	minus = ft_minus(&nbr);
 	nbr_str = ft_itoa(nbr);
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
-		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str, minus);
-	else if (minus == 1)
-		nbr_str = ft_strjoin("-", nbr_str);
-	if (spec.accuracy > nbr_len)
-		nbr_len = spec.accuracy;
+		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
 	return (nbr_str);
 }
 
@@ -104,6 +102,7 @@ int		ft_handler_d(va_list ap, t_spec spec)
 		ft_print_char_times(spec.width - len, ' ');
 	if (spec.flag != '-')
 		ft_putstr_len(len, str);
+	free(str);
 	return ((len > spec.width) ? len : spec.width);
 }
 
