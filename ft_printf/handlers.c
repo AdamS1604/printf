@@ -79,7 +79,16 @@ int		ft_handler_s(va_list ap, t_spec spec)
 // 	return (len);
 // }
 
-// i - count of 0 j - size of new str 
+int		ft_minus(int *nbr)
+{
+	if (*nbr < 0)
+	{
+		*nbr *= -1;
+		return (1);
+	}
+	return (0);
+}
+
 char	*ft_str_make(int i, int j, char **str, int minus)
 {
 	int k;
@@ -96,6 +105,8 @@ char	*ft_str_make(int i, int j, char **str, int minus)
 	return (new_str);
 }
 
+
+
 int		ft_handler_d(va_list ap, t_spec spec)
 {
 	int nbr;			// number form ap
@@ -103,26 +114,17 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	int minus;			// if number is negative
 	char *nbr_str;		// same number but positive and written to string
 
-	// get nbr from ap
 	nbr = va_arg(ap, int);
-
-	minus = 0;
-	if (nbr < 0)
-	{
-		nbr *= -1;
-		minus = 1;
-	}
-
+	minus = ft_minus(&nbr); 
 	nbr_str = ft_itoa(nbr);
 	nbr_len = ft_strlen(nbr_str);
-
 	if (spec.accuracy > nbr_len)
-	{
 		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str, minus);
-		nbr_len = spec.accuracy;
-	} 
 	else if (minus == 1)
 		nbr_str = ft_strjoin("-", nbr_str);
+	if (spec.accuracy > nbr_len)
+		nbr_len = spec.accuracy;
+	
 	ft_putstr(nbr_str);
 	return (nbr_len + minus);
 }

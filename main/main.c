@@ -24,7 +24,7 @@ void	ft_test(char *str, int n)
 
 int		main(void)
 {
-	ft_test("%.4d", 200);
+	ft_test("%.d", -200);
 
     return (0);
 }
