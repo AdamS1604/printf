@@ -42,42 +42,89 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
+// int		ft_handler_d(va_list ap, t_spec spec)
+// {
+// 	int len;
+// 	int nbr;
+// 	int nbr_len;
+// 	len = 0;
+// 	nbr = va_arg(ap, int);
+// 	nbr_len = ft_get_nbr_len(nbr, 10);
+// 	if (spec.accuracy > nbr_len)
+// 	{
+// 		spec.width = spec.accuracy;
+// 		spec.flag = '0';
+// 	}
+// 	if ((spec.space == 1) && !(nbr < 0))
+// 	{
+// 		spec.width--;
+// 		len += ft_putchar(' ');
+// 	}
+// 	if ((nbr < 0) && (spec.flag != '_'))
+// 		nbr *= -ft_putchar('-');
+// 	if (spec.width > nbr_len)
+// 	{
+// 		if (spec.flag == '-')
+// 			ft_putnbr(nbr);
+// 		if (spec.flag == '0')
+// 			len += ft_print_char_times(spec.width - nbr_len, '0');
+// 		else
+// 			len += ft_print_char_times(spec.width - nbr_len, ' ');
+// 		if (spec.flag != '-')
+// 			ft_putnbr(nbr);
+// 	}
+// 	else
+// 		ft_putnbr(nbr);
+// 	len += nbr_len;
+// 	return (len);
+// }
+
+// i - count of 0 j - size of new str 
+char	*ft_str_make(int i, int j, char **str, int minus)
+{
+	int k;
+	char *new_str;
+
+	k = 0;
+	new_str = malloc((sizeof(char) * j) + minus);
+	if (minus == 1)
+		new_str[k++] = '-';
+	while (i--)
+		new_str[k++] = '0';
+	new_str = ft_strjoin(new_str, *str);
+	free(*str);
+	return (new_str);
+}
+
 int		ft_handler_d(va_list ap, t_spec spec)
 {
-	int len;
-	int nbr;
-	int nbr_len;
+	int nbr;			// number form ap
+	int nbr_len;		// length of number
+	int minus;			// if number is negative
+	char *nbr_str;		// same number but positive and written to string
 
-	len = 0;
+	// get nbr from ap
 	nbr = va_arg(ap, int);
-	nbr_len = ft_get_nbr_len(nbr, 10);
+
+	minus = 0;
+	if (nbr < 0)
+	{
+		nbr *= -1;
+		minus = 1;
+	}
+
+	nbr_str = ft_itoa(nbr);
+	nbr_len = ft_strlen(nbr_str);
+
 	if (spec.accuracy > nbr_len)
 	{
-		spec.width = spec.accuracy;
-		spec.flag = '0';
-	}
-	if ((spec.space == 1) && !(nbr < 0))
-	{
-		spec.width--;
-		len += ft_putchar(' ');
-	}
-	if ((nbr < 0) && (spec.flag != '_'))
-		nbr *= -ft_putchar('-');
-	if (spec.width > nbr_len)
-	{
-		if (spec.flag == '-')
-			ft_putnbr(nbr);
-		if (spec.flag == '0')
-			len += ft_print_char_times(spec.width - nbr_len, '0');
-		else
-			len += ft_print_char_times(spec.width - nbr_len, ' ');
-		if (spec.flag != '-')
-			ft_putnbr(nbr);
-	}
-	else
-		ft_putnbr(nbr);
-	len += nbr_len;
-	return (len);
+		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str, minus);
+		nbr_len = spec.accuracy;
+	} 
+	else if (minus == 1)
+		nbr_str = ft_strjoin("-", nbr_str);
+	ft_putstr(nbr_str);
+	return (nbr_len + minus);
 }
 
 int		ft_format_out(const char **format, t_spec spec)

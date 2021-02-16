@@ -1,6 +1,6 @@
 #include "../ft_printf/ft_printf.h"
 
-void	ft_test(char *str)
+void	ft_test(char *str, int n)
 {
 	int i = 0;
 	int j = 0;
@@ -9,13 +9,13 @@ void	ft_test(char *str)
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 123);
+	i = ft_printf(str, n);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 123);
+	j = printf(str, n);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
@@ -24,7 +24,7 @@ void	ft_test(char *str)
 
 int		main(void)
 {
-	ft_test("%12.4d");
+	ft_test("%.4d", 200);
 
     return (0);
 }
