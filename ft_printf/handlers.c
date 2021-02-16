@@ -101,32 +101,39 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	str = ft_nbr_to_str(ap, spec, nbr);
 	str_len = ft_strlen(str);
 
-	if ((spec.space == 1) && (minus == 0))
-	{
+	// if ((spec.space == 1) || (minus == 1))
+	// 	space = 1;
+	
+	// minus at begining
+	if (minus == 1)
+		str_len++;
+
+	if (((minus == 1) && (spec.flag != '_')) || ((minus == 1) && (spec.width < str_len)))
+		// str_len += ft_putchar('-');
+		ft_putchar('-');
+	// space
+	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
+	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
 		str_len += ft_putchar(' ');
-	}
-	// minus
-	if ((minus == 1) && (spec.flag != '_'))
-		str_len += ft_putchar('-');
 	
 	// main
 	if (spec.width > str_len)
 	{
-		if (spec.flag == '-')
+ 		if (spec.flag == '-')
 			ft_putstr_len(str_len, str);
 		if ((spec.flag == '0') && (spec.accuracy == -1))
-			ft_print_char_times(spec.width - str_len - minus, '0');
+			ft_print_char_times(spec.width - str_len, '0');
 		else
-			ft_print_char_times(spec.width - str_len - minus, ' ');
-		if (minus == 1)
+			ft_print_char_times(spec.width - str_len, ' ');
+		if ((minus == 1) && (spec.flag == '_'))
 			str_len += ft_putchar('-'); // remove +=
 		if (spec.flag != '-')
 			ft_putstr_len(str_len, str);
 	}
 	else
 	{
-		if (minus == 1)
-			str_len += ft_putchar('-');
+		// if (minus == 1) // ? do i need this
+		// 	str_len += ft_putchar('-');
 		ft_putstr_len(str_len, str);
 	}
 
@@ -134,7 +141,7 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-// ! DEFEND LEAKS ALL
+// ! DEFEND LEAKS ALL (if no mem at heap also)
 
 int		ft_format_out(const char **format, t_spec spec)
 {
