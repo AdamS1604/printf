@@ -50,6 +50,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 	if (**format == '.')
 		if (*(++(*format)) == '*')
 		{
+			// ! Если берем из аргументов и меньше 0 то игнорируем
 			(*spec)->accuracy = va_arg(ap, int);
 			len += 2; // 2 тк еще надо пропустить .
 			(*format)--;
@@ -59,14 +60,12 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 			if ((num = ft_atoi(*format)) != 0)
 				len++;
 			(*spec)->accuracy = num;
+			// ! если вот здесь он меньше 0 то ошибка и выводим флаг + после точки ывводим 0 дополнитеьно 
 			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format); // + 1 тк еще надо пропустить .
 			(*format)--;
 		}
-	// if ((*spec)->accuracy < 0)
-	// {
-	// 	(*spec)->flag = '-';
-	// 	(*spec)->accuracy *= -1;
-	// }
+	//if ((*spec)->accuracy < 0)
+		// ! should be error
 	(*format) += len;
 	return(len);
 }
@@ -75,6 +74,7 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 {
 	int len;
 	
+	// TODO make errror on accuracy parsing
 	ft_init_spec(&spec);
 	len = ft_flags_parser(&format, &spec);
 	len += ft_width_parser(ap, &format, &spec);

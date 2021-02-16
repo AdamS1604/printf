@@ -30,6 +30,8 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	int str_len;
 
 	str = va_arg(ap, char*);
+	// if (str == 0)
+	// 	str = "(null)";
 	str_len = ft_strlen(str);
 	if ((spec.accuracy < str_len) && (spec.accuracy != -1))
 		str_len = spec.accuracy;
@@ -109,7 +111,7 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	{
 		if (spec.flag == '-')
 			ft_putstr_len(str_len, str);
-		if (spec.flag == '0')
+		if ((spec.flag == '0') && (spec.accuracy == -1))
 			ft_print_char_times(spec.width - str_len - minus, '0');
 		else
 			ft_print_char_times(spec.width - str_len - minus, ' ');
