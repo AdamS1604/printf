@@ -1,19 +1,20 @@
 #include "../ft_printf/ft_printf.h"
 
-void	ft_test(char *str, int nbr)
+void	ft_test(char *str)
 {
 	int i = 0;
 	int j = 0;
+	int a  = 5;
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, nbr);
+	j = printf(str, 0);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, nbr);
+	i = ft_printf(str, 0);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -45,7 +46,7 @@ int		main(void)
 	// ft_test("% 05d", -5);
 
 
-	ft_test("%X", 42);
+	ft_test("%p");
 
 	// *D I
 	// ? what will be if enteren number > or < int

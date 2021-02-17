@@ -6,8 +6,8 @@ int		ft_handler(va_list ap, t_spec spec)
 		return (ft_handler_c(ap, spec));
 	if (spec.type == 's') // done
 		return (ft_handler_s(ap, spec));
-	if (ft_strchr("dixX", spec.type)) // in progress
-		return (ft_handler_d(ap, spec));
+	if (ft_strchr("dixXp", spec.type)) // in progress
+		return (ft_handler_dixXp(ap, spec));
 	if (spec.type == '%')
 		return (ft_putchar('%'));
 	return (0);
@@ -94,7 +94,6 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 			nbr_str = ft_itoa_x(nbr, 16, 0);
 		else if (spec.type == 'X')
 			nbr_str = ft_itoa_x(nbr, 16, 1);
-		
 
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
@@ -102,16 +101,9 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 	return (nbr_str);
 }
 
-int		ft_handler_d(va_list ap, t_spec spec)
+int		ft_handler_str(va_list ap, t_spec spec, char *str, int minus)
 {
 	int str_len;
-	int nbr;
-	int minus;
-	char *str;
-
-	nbr = va_arg(ap, int);
-	minus = ft_minus(&nbr);
-	str = ft_nbr_to_str(ap, spec, nbr);
 	str_len = ft_strlen(str) + minus;
 
 	// 0 flag and accuracy
@@ -148,6 +140,29 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	if (*str != '\0')
 		free(str);
 	return ((str_len > spec.width) ? str_len : spec.width);
+}
+
+// TODO separate this
+int  	ft_handler_dixXp(va_list ap, t_spec spec)
+{
+	int nbr;
+	int minus;
+	char *str;
+
+	minus = 0;
+	if (spec.type == 'p')
+	{
+		spec.accuracy = -1;
+		str = ft_itoa_p(va_arg(ap, unsigned long long), 16);
+	}
+	else
+	{
+		nbr = va_arg(ap, int);
+		minus = ft_minus(&nbr);
+		str = ft_nbr_to_str(ap, spec, nbr);
+	}
+
+	return (ft_handler_str(ap, spec, str, minus));
 }
 
 // ! DEFEND LEAKS ALL (if no mem at heap also)

@@ -349,3 +349,37 @@ char			*ft_itoa_x(unsigned int n, int base, int flag)
 	return (str);
 }
 
+static size_t	init_size_p(unsigned long long int n, int base)
+{
+	size_t	size;
+
+	size = 3;
+	while (n / base)
+	{
+		n /= base;
+		size++;
+	}
+	return (size);
+}
+
+char			*ft_itoa_p(unsigned long long int n, int base)
+{
+	unsigned long long int		num;
+	char						*str;
+	size_t						size;
+	char						*base_arr;
+
+	size = init_size_p(n, base);
+	num = n;
+	if (!(str = (char*)ft_calloc(size + 1, sizeof(char))))
+		return (str);
+	*(str + 0) = '0';
+	*(str + 1) = 'x';
+	base_arr = "0123456789abcdef";
+	while (size > 2)
+	{
+		*(str + --size) = *(base_arr + (num % base));
+		num /= base;
+	}
+	return (str);
+}
