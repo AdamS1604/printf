@@ -99,18 +99,16 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	nbr = va_arg(ap, int);
 	minus = ft_minus(&nbr);
 	str = ft_nbr_to_str(ap, spec, nbr);
-	str_len = ft_strlen(str);
+	str_len = ft_strlen(str) + minus;
 
-	// if ((spec.space == 1) || (minus == 1))
-	// 	space = 1;
-	
+	// 0 flag and accuracy
+	if ((spec.flag == '0') && (spec.accuracy != -1))
+		spec.flag = '_';
+
 	// minus at begining
-	if (minus == 1)
-		str_len++;
-
-	if (((minus == 1) && (spec.flag != '_')) || ((minus == 1) && (spec.width < str_len)))
-		// str_len += ft_putchar('-');
+	if (((minus == 1) && (spec.flag != '_')) || ((minus == 1) && (spec.width <= str_len)))
 		ft_putchar('-');
+	
 	// space
 	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
 	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
@@ -125,17 +123,14 @@ int		ft_handler_d(va_list ap, t_spec spec)
 			ft_print_char_times(spec.width - str_len, '0');
 		else
 			ft_print_char_times(spec.width - str_len, ' ');
+		// minus at the end
 		if ((minus == 1) && (spec.flag == '_'))
-			str_len += ft_putchar('-'); // remove +=
+			ft_putchar('-');
 		if (spec.flag != '-')
 			ft_putstr_len(str_len, str);
 	}
 	else
-	{
-		// if (minus == 1) // ? do i need this
-		// 	str_len += ft_putchar('-');
 		ft_putstr_len(str_len, str);
-	}
 
 	free(str);
 	return ((str_len > spec.width) ? str_len : spec.width);

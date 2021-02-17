@@ -26,7 +26,9 @@ int		main(void)
 	// ft_test("% 10.d", -200);     // good
 	// ft_test("% 0.d", -200);
 	// ft_test("%0 20.10d", -200);
-	// ft_test("%010.5d", 10);
+	// ft_test("%010.5d", -10);
+	// ft_test("%5d", -2562);
+
 
 	// ft_test("%d", 5);
 	// ft_test("%5d", 5);
@@ -35,12 +37,12 @@ int		main(void)
 	// ft_test("% -5d", 5);
 	// ft_test("% 05d", 5);
 
-	ft_test("%d", -5);
-	ft_test("%5d", -5);
-	ft_test("%05d", -5);
-	ft_test("%-5d", -5);
-	ft_test("% -5d", -5);
-	ft_test("% 05d", -5);
+	// ft_test("%d", -5);
+	// ft_test("%5d", -5);
+	// ft_test("%05d", -5);
+	// ft_test("%-5d", -5);
+	// ft_test("% -5d", -5);
+	// ft_test("% 05d", -5);
 
 	// ! NULL
 	// ! 0
