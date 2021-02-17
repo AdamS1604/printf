@@ -72,17 +72,37 @@ char	*ft_str_make(int i, int j, char **str)
 	tmp = new_str;
 	new_str = ft_strjoin(new_str, *str);
 	free(tmp);
-	free(*str);
+	if (**str != '\0')
+		free(*str);
 	return (new_str);
 }
 
+// positive number to str
 char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 {
 	int nbr_len;		// length of number
 	char *nbr_str;		// same number but positive and written to string
 	char *tmp;
 
-	nbr_str = ft_itoa(nbr);
+	nbr_str = 0;
+	if ((nbr == 0) && (spec.accuracy != -1))
+		nbr_str = "";
+	else
+	{
+
+
+		if ((spec.type == 'd') || (spec.type == 'i'))
+			nbr_str = ft_itoa(nbr);
+		// else if ((spec.type == 'x') || (spec.type == 'X'))
+		// 	nbr_str = ft_itoa_x(nbr, 16)
+		
+		// if (spec.type == 'x')
+			// to lower
+
+	}
+	
+
+
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
 		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
@@ -132,7 +152,8 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	else
 		ft_putstr_len(str_len, str);
 
-	free(str);
+	if (*str != '\0')
+		free(str);
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 

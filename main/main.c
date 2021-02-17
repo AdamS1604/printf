@@ -1,19 +1,20 @@
 #include "../ft_printf/ft_printf.h"
 
-void	ft_test(char *str, int n)
+void	ft_test(char *str)
 {
 	int i = 0;
 	int j = 0;
+	void *ptr = 0;
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, n);
+	j = printf(str, ptr);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, n);
+	i = ft_printf(str, ptr);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -43,11 +44,13 @@ int		main(void)
 	// ft_test("%-5d", -5);
 	// ft_test("% -5d", -5);
 	// ft_test("% 05d", -5);
+	ft_test("%08.5i");
 
+
+	// TODO add | in output
+	// TODO make cool test with diff
 	// ! NULL
 	// ! 0
-	// ! %5i", -2562
-	// ! %010.5i", -216 
 
     return (0);
 }
