@@ -6,7 +6,7 @@ int		ft_handler(va_list ap, t_spec spec)
 		return (ft_handler_c(ap, spec));
 	if (spec.type == 's') // done
 		return (ft_handler_s(ap, spec));
-	if (ft_strchr("dixXp", spec.type)) // in progress
+	if (ft_strchr("dixXpu", spec.type)) // in progress
 		return (ft_handler_dixXp(ap, spec));
 	if (spec.type == '%')
 		return (ft_putchar('%'));
@@ -90,6 +90,8 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 	else
 		if ((spec.type == 'd') || (spec.type == 'i'))
 			nbr_str = ft_itoa(nbr);
+		else if (spec.type == 'u')
+			nbr_str = ft_itoa_x(nbr, 10, 0);
 		else if (spec.type == 'x')
 			nbr_str = ft_itoa_x(nbr, 16, 0);
 		else if (spec.type == 'X')
@@ -157,6 +159,11 @@ int  	ft_handler_dixXp(va_list ap, t_spec spec)
 			str = ft_strdup("(nil)");
 		else
 			str = ft_itoa_p(ptr, 16);
+	}
+	else if (spec.type == 'u')
+	{
+		nbr = va_arg(ap, unsigned int);
+		str = ft_nbr_to_str(ap, spec, nbr);
 	}
 	else
 	{

@@ -8,13 +8,13 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 0);
+	j = printf(str, -13);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 0);
+	i = ft_printf(str, -13);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -46,7 +46,7 @@ int		main(void)
 	// ft_test("% 05d", -5);
 
 
-	ft_test("%p");
+	ft_test("%u");
 
 	// *D I
 	// ? what will be if enteren number > or < int
