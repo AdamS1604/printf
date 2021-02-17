@@ -6,7 +6,7 @@ int		ft_handler(va_list ap, t_spec spec)
 		return (ft_handler_c(ap, spec));
 	if (spec.type == 's') // done
 		return (ft_handler_s(ap, spec));
-	if ((spec.type == 'd') || (spec.type == 'i')) // in progress
+	if (ft_strchr("dixX", spec.type)) // in progress
 		return (ft_handler_d(ap, spec));
 	if (spec.type == '%')
 		return (ft_putchar('%'));
@@ -88,20 +88,13 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 	if ((nbr == 0) && (spec.accuracy != -1))
 		nbr_str = "";
 	else
-	{
-
-
 		if ((spec.type == 'd') || (spec.type == 'i'))
 			nbr_str = ft_itoa(nbr);
-		// else if ((spec.type == 'x') || (spec.type == 'X'))
-		// 	nbr_str = ft_itoa_x(nbr, 16)
+		else if (spec.type == 'x')
+			nbr_str = ft_itoa_x(nbr, 16, 0);
+		else if (spec.type == 'X')
+			nbr_str = ft_itoa_x(nbr, 16, 1);
 		
-		// if (spec.type == 'x')
-			// to lower
-
-	}
-	
-
 
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)

@@ -275,35 +275,77 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	return (ptr);
 }
 
-// static size_t	init_size(unsigned int n, int base)
-// {
-// 	size_t	size;
+//
 
-// 	size = 1;
-// 	while (n / base)
-// 	{
-// 		n /= base;
-// 		size++;
-// 	}
-// 	return (size);
-// }
+char	*ft_strupcase(char *str)
+{
+	char *i;
 
-// char			*ft_itoa_x(unsigned int n, int base)
-// {
-// 	unsigned int		num;
-// 	char				*str;
-// 	size_t				size;
-// 	const char			*arr_base;
+	i = str;
+	while (*str != '\0')
+	{
+		if ((*str >= 65) && (*str <= 90))
+		{
+			*str = *str + 32;
+		}
+		str++;
+	}
+	return (i);
+}
 
-// 	size = init_size(n, base);
-// 	num = n;
-// 	if (!(str = (char*)ft_calloc(size + 1, 1)))
-// 		return (str);
-// 	arr_base = "0123456789ABCDEF";
-// 	while (size > 0)
-// 	{
-// 		*(str + --size) = *(arr_base + (num % base));
-// 		num /= base;
-// 	}
-// 	return (str);
-// }
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)s;
+	while (n--)
+		*(ptr++) = '\0';
+}
+
+void	*ft_calloc(size_t number, size_t size)
+{
+	void	*ptr;
+
+	ptr = (void*)malloc(number * size);
+	if (!ptr)
+		return (0);
+	ft_bzero(ptr, number * size);
+	return (ptr);
+}
+
+static size_t	init_size(unsigned int n, int base)
+{
+	size_t	size;
+
+	size = 1;
+	while (n / base)
+	{
+		n /= base;
+		size++;
+	}
+	return (size);
+}
+
+char			*ft_itoa_x(unsigned int n, int base, int flag)
+{
+	unsigned int		num;
+	char				*str;
+	size_t				size;
+	const char			*arr_base;
+
+	size = init_size(n, base);
+	num = n;
+	if (!(str = (char*)ft_calloc(size + 1, 1)))
+		return (str);
+	if (flag == 1)
+		arr_base = "0123456789ABCDEF";
+	else
+		arr_base = "0123456789abcdef";
+	while (size > 0)
+	{
+		*(str + --size) = *(arr_base + (num % base));
+		num /= base;
+	}
+	return (str);
+}
+

@@ -1,19 +1,19 @@
 #include "../ft_printf/ft_printf.h"
 
-void	ft_test(char *str)
+void	ft_test(char *str, int nbr)
 {
 	int i = 0;
 	int j = 0;
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, -1024);
+	j = printf(str, nbr);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, -1024);
+	i = ft_printf(str, nbr);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -44,11 +44,14 @@ int		main(void)
 	// ft_test("% -5d", -5);
 	// ft_test("% 05d", -5);
 
+
+	ft_test("%X", 42);
+
 	// *D I
 	// ? what will be if enteren number > or < int
 	// ! FIX THIS
 	// ft_test("%020.5i");
-	// ft_test("%020.5i");
+	// ft_test("%020.5i"); //memory leak somewhere?
 
 
 	// TODO add | in output

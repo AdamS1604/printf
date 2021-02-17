@@ -29,9 +29,11 @@ void	ft_putnbr(int n);
 char    *ft_strchr(const char *s, int c);
 int		ft_atoi(const char *str1);
 // ...
-char		*ft_itoa(int n);
-char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_itoa_x(unsigned int n, int base);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char const *s1, char const *s2);
+//
+char	*ft_strupcase(char *str);
+char	*ft_itoa_x(unsigned int n, int base, int flag);
 
 // ft_printf.c
 int		ft_handler_ap(va_list ap, const char **format);
