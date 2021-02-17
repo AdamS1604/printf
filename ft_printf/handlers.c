@@ -86,7 +86,7 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 
 	nbr_str = 0;
 	if ((nbr == 0) && (spec.accuracy != -1))
-		nbr_str = "";
+		nbr_str = ft_strdup("");
 	else
 		if ((spec.type == 'd') || (spec.type == 'i'))
 			nbr_str = ft_itoa(nbr);
@@ -101,10 +101,10 @@ char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
 	return (nbr_str);
 }
 
-int		ft_handler_str(va_list ap, t_spec spec, char *str, int minus)
+int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 {
 	int str_len;
-	str_len = ft_strlen(str) + minus;
+	str_len = ft_strlen(*str) + minus;
 
 	// 0 flag and accuracy
 	if ((spec.flag == '0') && (spec.accuracy != -1))
@@ -123,7 +123,7 @@ int		ft_handler_str(va_list ap, t_spec spec, char *str, int minus)
 	if (spec.width > str_len)
 	{
  		if (spec.flag == '-')
-			ft_putstr_len(str_len, str);
+			ft_putstr_len(str_len, *str);
 		if ((spec.flag == '0') && (spec.accuracy == -1))
 			ft_print_char_times(spec.width - str_len, '0');
 		else
@@ -132,13 +132,12 @@ int		ft_handler_str(va_list ap, t_spec spec, char *str, int minus)
 		if ((minus == 1) && (spec.flag == '_'))
 			ft_putchar('-');
 		if (spec.flag != '-')
-			ft_putstr_len(str_len, str);
+			ft_putstr_len(str_len, *str);
 	}
 	else
-		ft_putstr_len(str_len, str);
+		ft_putstr_len(str_len, *str);
 
-	if (*str != '\0')
-		free(str);
+	free(*str);
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
@@ -146,6 +145,7 @@ int		ft_handler_str(va_list ap, t_spec spec, char *str, int minus)
 int  	ft_handler_dixXp(va_list ap, t_spec spec)
 {
 	int nbr;
+	unsigned long long ptr;
 	int minus;
 	char *str;
 
@@ -153,7 +153,10 @@ int  	ft_handler_dixXp(va_list ap, t_spec spec)
 	if (spec.type == 'p')
 	{
 		spec.accuracy = -1;
-		str = ft_itoa_p(va_arg(ap, unsigned long long), 16);
+		if ((ptr = va_arg(ap, unsigned long long)) == 0)
+			str = ft_strdup("(nil)");
+		else
+			str = ft_itoa_p(ptr, 16);
 	}
 	else
 	{
@@ -162,7 +165,7 @@ int  	ft_handler_dixXp(va_list ap, t_spec spec)
 		str = ft_nbr_to_str(ap, spec, nbr);
 	}
 
-	return (ft_handler_str(ap, spec, str, minus));
+	return (ft_handler_str(ap, spec, &str, minus));
 }
 
 // ! DEFEND LEAKS ALL (if no mem at heap also)

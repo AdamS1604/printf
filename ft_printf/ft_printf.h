@@ -31,6 +31,7 @@ int		ft_atoi(const char *str1);
 
 // ...
 char	*ft_itoa(int n);
+char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 //
 char	*ft_strupcase(char *str);
@@ -53,7 +54,7 @@ int		ft_handler(va_list ap, t_spec spec);
 int		ft_handler_c(va_list ap, t_spec spec);
 int		ft_handler_s(va_list ap, t_spec spec);
 int  	ft_handler_dixXp(va_list ap, t_spec spec);
-int		ft_handler_str(va_list ap, t_spec spec, char *str, int minus);
+int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus);
 int		ft_format_out(const char **format, t_spec spec);
 
 #endif
