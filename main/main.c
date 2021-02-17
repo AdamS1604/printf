@@ -4,17 +4,16 @@ void	ft_test(char *str)
 {
 	int i = 0;
 	int j = 0;
-	void *ptr = 0;
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, ptr);
+	j = printf(str, -1024);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, ptr);
+	i = ft_printf(str, -1024);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -44,13 +43,16 @@ int		main(void)
 	// ft_test("%-5d", -5);
 	// ft_test("% -5d", -5);
 	// ft_test("% 05d", -5);
-	ft_test("%08.5i");
+
+	// *D I
+	// ? what will be if enteren number > or < int
+	// ! FIX THIS
+	// ft_test("%020.5i");
+	// ft_test("%020.5i");
 
 
 	// TODO add | in output
 	// TODO make cool test with diff
-	// ! NULL
-	// ! 0
 
     return (0);
 }
