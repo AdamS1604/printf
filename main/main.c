@@ -8,13 +8,13 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, -13);
+	j = printf(str, -15, 42);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, -13);
+	i = ft_printf(str, -15, 42);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -46,11 +46,14 @@ int		main(void)
 	// ft_test("% 05d", -5);
 
 
-	ft_test("%u");
+	// ft_test("p17 %d\n");
+	// ft_test("%x\n");
+
+	ft_test("%05.*d");
 
 	// *D I
 	// ? what will be if enteren number > or < int
-	// ! FIX THIS
+	// ! FIX THIS (ERROR #1)
 	// ft_test("%020.5i");
 	// ft_test("%020.5i"); //memory leak somewhere?
 

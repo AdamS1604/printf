@@ -72,8 +72,9 @@ char	*ft_str_make(int i, int j, char **str)
 	tmp = new_str;
 	new_str = ft_strjoin(new_str, *str);
 	free(tmp);
-	if (**str != '\0')
-		free(*str);
+	// ! Do i need this ? i have error #1 because of this
+	// if (**str != '\0')
+	// 	free(*str);
 	return (new_str);
 }
 
@@ -109,7 +110,7 @@ int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 	str_len = ft_strlen(*str) + minus;
 
 	// 0 flag and accuracy
-	if ((spec.flag == '0') && (spec.accuracy != -1))
+	if ((spec.flag == '0') && (spec.accuracy > -1))
 		spec.flag = '_';
 
 	// minus at begining
@@ -126,7 +127,7 @@ int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 	{
  		if (spec.flag == '-')
 			ft_putstr_len(str_len, *str);
-		if ((spec.flag == '0') && (spec.accuracy == -1))
+		if ((spec.flag == '0') && (spec.accuracy < 0))
 			ft_print_char_times(spec.width - str_len, '0');
 		else
 			ft_print_char_times(spec.width - str_len, ' ');
@@ -163,6 +164,12 @@ int  	ft_handler_dixXp(va_list ap, t_spec spec)
 	else if (spec.type == 'u')
 	{
 		nbr = va_arg(ap, unsigned int);
+		str = ft_nbr_to_str(ap, spec, nbr);
+	}
+	else if ((spec.type == 'x') || (spec.type == 'X'))
+	{
+		nbr = va_arg(ap, unsigned int);
+		minus = ft_minus(&nbr);
 		str = ft_nbr_to_str(ap, spec, nbr);
 	}
 	else
