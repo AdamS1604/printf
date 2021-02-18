@@ -35,7 +35,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 //
 char	*ft_strupcase(char *str);
 char	*ft_itoa_u(unsigned int n, int base, int flag);
-char	*ft_itoa_p(unsigned long long int n, int base);
+char	*ft_itoa_ull(unsigned long long int n, int base);
 
 // ft_printf.c
 int		ft_handler_ap(va_list ap, const char **format);

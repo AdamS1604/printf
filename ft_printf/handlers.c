@@ -83,7 +83,7 @@ int		ft_handler_p(va_list ap, t_spec spec)
 		str = ft_strdup("(nil)");
 	else
 	{
-		str = ft_itoa_u(nbr, 16, 0);
+		str = ft_itoa_ull(nbr, 16);
 		str = ft_str_add_accuracy(ap, spec, str);
 		tmp = str;
 		str = ft_strjoin("0x", str);

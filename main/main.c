@@ -8,20 +8,22 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 0x2a);
+	j = printf(str, &a);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 0x2a);
+	i = ft_printf(str, &a);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
 
 int		main(void)
 {
-	ft_test("%.3p");
+	ft_test("%p");
+	// ? i dont need (itoa_p?)
+	// ? why less tests? leaks?
 	// TODO add | in output
 	// TODO make cool test with diff
 
