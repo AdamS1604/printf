@@ -214,15 +214,52 @@ int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 
 // ! DEFEND LEAKS ALL (if no mem at heap also)
 
+// int		ft_format_out(const char **format, t_spec spec)
+// {
+// 	int len;
+//
+// 	len = ft_putchar('%');
+// 	if (**format == ' ')
+// 		len += ft_putchar(' ');
+// 	while (**format == ' ')
+// 		(*format)++;
+// 	while (**format != '\0')
+// 	{
+// 		if (**format == '*')
+// 		{
+// 			ft_putnbr(spec.width);
+// 			len += ft_get_nbr_len(spec.width, 10);
+// 		}
+// 		else if ((**format == '.') && (*(++(*format)) == '*'))
+// 		{
+// 			ft_putchar('.');
+// 			ft_putnbr(spec.accuracy);
+// 			len += ft_get_nbr_len(spec.accuracy, 10) + 1;
+// 		}
+// 		else
+// 			len += ft_putchar(**format);
+// 		(*format)++;
+// 	}
+// 	return (len);
+// }
+
 int		ft_format_out(const char **format, t_spec spec)
 {
 	int len;
+	int tmp;
 
+	// % out 
 	len = ft_putchar('%');
+
+	// len + 1 for space
 	if (**format == ' ')
 		len += ft_putchar(' ');
+	
+	// skip spaces
 	while (**format == ' ')
 		(*format)++;
+	
+	//body
 	while (**format != '\0')
 	{
 		if (**format == '*')
@@ -230,15 +267,30 @@ int		ft_format_out(const char **format, t_spec spec)
 			ft_putnbr(spec.width);
 			len += ft_get_nbr_len(spec.width, 10);
 		}
-		else if ((**format == '.') && (*(++(*format)) == '*'))
+		else if (**format == '.')
 		{
-			ft_putchar('.');
-			ft_putnbr(spec.accuracy);
-			len += ft_get_nbr_len(spec.accuracy, 10) + 1;
+			// if (**format + 1) == \0 then out -1 dand exit , else if = - then out 0 then - and number
+			if ((*((*format) + 1) == '*') || (*((*format) + 1) == '-'))
+			{
+				len += ft_putchar('.');
+				if (*((*format) + 1) == '-')
+				{
+					len += ft_putchar('0');
+				}
+				ft_putnbr(spec.accuracy);
+				tmp = ft_get_nbr_len(spec.accuracy, 10);
+				len += tmp;
+				(*format) += tmp;
+			}
+			else if (*((*format) + 1) == '\0')
+				return (-1);
+			else
+				len += ft_putchar(**format);
 		}
 		else
 			len += ft_putchar(**format);
 		(*format)++;
 	}
 	return (len);
+	return (0);
 }
