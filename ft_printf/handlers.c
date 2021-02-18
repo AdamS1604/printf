@@ -75,14 +75,20 @@ int		ft_handler_p(va_list ap, t_spec spec)
 {
 	unsigned long long nbr;
 	char *str;
+	char *tmp;
 
-	spec.accuracy = -1;
+	// spec.accuracy = -1;
 	nbr = va_arg(ap, unsigned long long);
 	if (nbr == 0)
 		str = ft_strdup("(nil)");
 	else
-		str = ft_itoa_p(nbr, 16);
-	
+	{
+		str = ft_itoa_u(nbr, 16, 0);
+		str = ft_str_add_accuracy(ap, spec, str);
+		tmp = str;
+		str = ft_strjoin("0x", str);
+		free(tmp);
+	}
 	return(ft_handler_str(ap, spec, &str, 0));
 }
 

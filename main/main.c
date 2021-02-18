@@ -8,20 +8,20 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 200);
+	j = printf(str, 0x2a);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 200);
+	i = ft_printf(str, 0x2a);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
 
 int		main(void)
 {
-	ft_test("%d");
+	ft_test("%.3p");
 	// TODO add | in output
 	// TODO make cool test with diff
 
