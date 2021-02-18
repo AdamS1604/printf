@@ -50,9 +50,8 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 	if (**format == '.')
 		if (*(++(*format)) == '*')
 		{
-			// ! Если берем из аргументов и меньше 0 то игнорируем
 			(*spec)->accuracy = va_arg(ap, int);
-			len += 2; // 2 тк еще надо пропустить .
+			len += 2;
 			(*format)--;
 		}
 		else
@@ -60,12 +59,11 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 			if ((num = ft_atoi(*format)) != 0)
 				len++;
 			(*spec)->accuracy = num;
-			// ! если вот здесь он меньше 0 то ошибка и выводим флаг + после точки ывводим 0 дополнитеьно 
+			if (num < 0)
+				return (-1);
 			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format); // + 1 тк еще надо пропустить .
 			(*format)--;
 		}
-	//if ((*spec)->accuracy < 0)
-		// ! should be error
 	(*format) += len;
 	return(len);
 }
@@ -73,14 +71,18 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 int		ft_parser(va_list ap, const char *format, t_spec *spec)
 {
 	int len;
+	int a_len;
 	
-	// TODO make errror on accuracy parsing
 	ft_init_spec(&spec);
 	len = ft_flags_parser(&format, &spec);
 	len += ft_width_parser(ap, &format, &spec);
-	len += ft_accuracy_parser(ap, &format, &spec);
+	a_len = ft_accuracy_parser(ap, &format, &spec);
+
 	if (*format == '\0')
 		return (0);
+	else if (a_len < 0)
+		return (len + 1);
+	len += a_len;
 	if (ft_strchr("diucspxX%", *format))
 		spec->type = *format;
 	else if ((*(format + 1)) == '\0')
