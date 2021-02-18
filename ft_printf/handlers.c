@@ -48,7 +48,7 @@ int		ft_handler_s(va_list ap, t_spec spec)
 		else
 			str = "";
 	str_len = ft_strlen(str);
-	if ((spec.accuracy < str_len) && (spec.accuracy != -1))
+	if ((spec.accuracy < str_len) && (spec.accuracy > -1))
 		str_len = spec.accuracy;
 	if (spec.flag == '-')
 		ft_putstr_len(str_len, str);
