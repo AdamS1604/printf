@@ -20,8 +20,7 @@ int		ft_handler_hub(va_list ap, t_spec spec)
 	return (0);
 }
 
-// TODO defend all there handlers from malloc errors
-
+// GOOD
 int		ft_handler_c(va_list ap, t_spec spec)
 {
 	if (spec.flag == '-')
@@ -33,6 +32,7 @@ int		ft_handler_c(va_list ap, t_spec spec)
 	return ((spec.width != 0) ? spec.width : 1);
 }
 
+// GOOD
 int		ft_handler_s(va_list ap, t_spec spec)
 {
 	char *str;
@@ -118,7 +118,12 @@ int		ft_handler_di(va_list ap, t_spec spec)
 	char *str;
 
 	nbr = va_arg(ap, int);
-	minus = ft_minus(&nbr);
+	minus = 0;
+	if (nbr < 0)
+	{
+		nbr *= -1;
+		minus = 1;
+	}
 	if ((nbr == 0) && (spec.accuracy != -1))
 		str = ft_strdup("");
 	else
@@ -126,18 +131,6 @@ int		ft_handler_di(va_list ap, t_spec spec)
 
 	str = ft_str_add_accuracy(ap, spec, str);
 	return (ft_handler_str(ap, spec, &str, minus));
-}
-
-// util
-
-int		ft_minus(int *nbr)
-{
-	if (*nbr < 0)
-	{
-		*nbr *= -1;
-		return (1);
-	}
-	return (0);
 }
 
 char	*ft_str_acc(int i, int j, char **str)
@@ -153,12 +146,10 @@ char	*ft_str_acc(int i, int j, char **str)
 	tmp = new_str;
 	new_str = ft_strjoin(new_str, *str);
 	free(tmp);
-	// ! Do i need this ? i have error #1 because of this
-	// if (**str != '\0')
-	// 	free(*str);
 	return (new_str);
 }
 
+// ! pass ** ?
 char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 {
 	int nbr_len;		// length of number
@@ -169,8 +160,6 @@ char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 		nbr_str = ft_str_acc(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
 	return (nbr_str);
 }
-
-// end util
 
 int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 {
