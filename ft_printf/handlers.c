@@ -136,33 +136,6 @@ int		ft_handler_di(va_list ap, t_spec spec)
 	return (ft_handler_str(ap, spec, &str, minus));
 }
 
-
-// util
-char	*ft_str_add_accuracy(va_list ap, t_spec spec, char **nbr_str)
-{
-	int nbr_len;
-	char *new_str;
-	char *tmp;
-	int i;
-	int j;
-	int k;
-
-	nbr_len = ft_strlen(*nbr_str);
-	if (spec.accuracy > nbr_len)
-	{
-		i = spec.accuracy - nbr_len;
-		k = 0;
-		new_str = (char *)ft_calloc(spec.accuracy, sizeof(char));
-		while (i--)
-			new_str[k++] = '0';
-		tmp = *nbr_str;
-		*nbr_str = ft_strjoin(new_str, *nbr_str);
-		free(tmp);
-		free(new_str);
-	}
-	return (*nbr_str);
-}
-
 // todo corp this ft
 
 // diupxX str hanler
@@ -206,7 +179,9 @@ int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-//TODO FORMAT TEST
+//TODO BETTER FT FORMAT WRITE
+//TODO CORP FT FORMAT WRITE
+//TODO TEST FT FORMAT
 
 // int		ft_format_out(const char **format, t_spec spec)
 // {

@@ -8,13 +8,13 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, "hello", -64,",8");
+	j = printf(str, 64,",8");
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, "hello",-64,",8");
+	i = ft_printf(str, 64,",8");
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
@@ -22,7 +22,10 @@ void	ft_test(char *str)
 int		main(void)
 {
 	// ft_test("%16.*s");
-	ft_test("%.3s");
+	ft_test("%.3u");
+	ft_test("%10.123u");
+	ft_test("%4.1u");
+	ft_test("%.3u");
 
     return (0);
 }
