@@ -155,57 +155,6 @@ int		ft_atoi(const char *str1)
 
 //
 
-static char	*ft_iszero(void)
-{
-	char *res;
-
-	res = malloc(sizeof(char) * 2);
-	res[0] = '0';
-	res[1] = '\0';
-	return (res);
-}
-
-static int	ft_size(int nbr)
-{
-	int cnt;
-
-	cnt = 0;
-	if (nbr < 0)
-		cnt++;
-	while (nbr)
-	{
-		nbr = nbr / 10;
-		cnt++;
-	}
-	return (cnt);
-}
-
-char		*ft_itoa(int n)
-{
-	int	cnt;
-	char*res;
-
-	if (n == 0)
-		return (ft_iszero());
-	cnt = ft_size(n);
-	res = malloc(sizeof(char) * (cnt + 1));
-	if (!res)
-		return (0);
-	res[cnt] = '\0';
-	if (n < 0)
-		res[0] = '-';
-	while (n)
-	{
-		if (n < 0)
-			res[cnt - 1] = '0' - n % 10;
-		else
-			res[cnt - 1] = '0' + n % 10;
-		n = n / 10;
-		cnt--;
-	}
-	return (res);
-}
-
 void	*ft_memcpy(void *destination, const void *source, size_t n)
 {
 	unsigned char *dest;
@@ -313,7 +262,7 @@ void	*ft_calloc(size_t number, size_t size)
 	return (ptr);
 }
 
-static size_t	init_size(unsigned int n, int base)
+static size_t	init_size_u(unsigned int n, int base)
 {
 	size_t	size;
 
@@ -326,14 +275,14 @@ static size_t	init_size(unsigned int n, int base)
 	return (size);
 }
 
-char			*ft_itoa_x(unsigned int n, int base, int flag)
+char			*ft_itoa_u(unsigned int n, int base, int flag)
 {
 	unsigned int		num;
 	char				*str;
 	size_t				size;
 	const char			*arr_base;
 
-	size = init_size(n, base);
+	size = init_size_u(n, base);
 	num = n;
 	if (!(str = (char*)ft_calloc(size + 1, 1)))
 		return (str);
