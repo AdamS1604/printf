@@ -50,7 +50,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec);
 int		ft_parser(va_list ap, const char *format, t_spec *spec);
 
 // handler.c
-int		ft_handler(va_list ap, t_spec spec);
+int		ft_handler_hub(va_list ap, t_spec spec);
 int		ft_handler_c(va_list ap, t_spec spec);
 int		ft_handler_s(va_list ap, t_spec spec);
 int  	ft_handler_dixXp(va_list ap, t_spec spec);

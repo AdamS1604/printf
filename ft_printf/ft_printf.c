@@ -8,20 +8,25 @@ int		ft_handler_ap(va_list ap, const char **format)
 
 	parse = ft_parser(ap, ++(*format), &spec);
 
+	// invalid flag and nothing more to output
 	if (parse == 0)
 		return (-1);
-	else if (parse < 0)
-		len = ft_handler(ap, spec);
+	// output invalid foramt
 	else if (parse > 0)
 		len = ft_format_out(format, spec);
-
-    // ???
-	if (parse < 0)
-		parse *= -1;
-	else if (parse > 0)
-		return (len);
+	// output ap
+	else if ((parse *= -1) > 0)
+		// TODO should return -1 if malloc error
+		len = ft_handler_hub(ap, spec); 
+	
+    // ? fix there
+	// if (parse < 0)
+	// 	parse *= -1;
+	// else if (parse > 0)
+	// 	return (len);
 	(*format) += parse;
-	return (len);
+	// mallocs defence
+	return ((len < 0) ? -1 : len);
 }
 
 int		ft_print_all(va_list ap, const char *format)

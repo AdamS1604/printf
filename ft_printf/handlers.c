@@ -1,13 +1,20 @@
 #include "ft_printf.h"
 
-int		ft_handler(va_list ap, t_spec spec)
+int		ft_handler_hub(va_list ap, t_spec spec)
 {
-	if (spec.type == 'c') // done
-		return (ft_handler_c(ap, spec));
-	if (spec.type == 's') // done
-		return (ft_handler_s(ap, spec));
-	if (ft_strchr("dixXpu", spec.type)) // in progress
-		return (ft_handler_dixXp(ap, spec));
+	if (spec.type == 'c') 
+		return (ft_handler_c(ap, spec)); //done
+	if (spec.type == 's') 
+		return (ft_handler_s(ap, spec)); //done
+	if (spec.type == 'u')
+		return (ft_handler_u(ap, spec));
+	if (spec.type == 'p')
+		return (ft_handler_p(ap, spec));
+	if ((spec.type == 'x') || (spec.type == 'X'))
+		return (ft_handler_xX(ap, spec));
+	if ((spec.type == 'd') || (spec.type == 'i'))
+		return (ft_handler_di(ap, spec));
+	//? Threat this different? just identify this as invalid flag
 	if (spec.type == '%')
 		return (ft_putchar('%'));
 	return (0);
@@ -59,7 +66,7 @@ int		ft_minus(int *nbr)
 	return (0);
 }
 
-char	*ft_str_make(int i, int j, char **str)
+char	*ft_str_acc(int i, int j, char **str)
 {
 	int k;
 	char *new_str;
@@ -79,28 +86,26 @@ char	*ft_str_make(int i, int j, char **str)
 }
 
 // positive number to str
-char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
+char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 {
 	int nbr_len;		// length of number
-	char *nbr_str;		// same number but positive and written to string
 	char *tmp;
 
-	nbr_str = 0;
-	if ((nbr == 0) && (spec.accuracy != -1))
-		nbr_str = ft_strdup("");
-	else
-		if ((spec.type == 'd') || (spec.type == 'i'))
-			nbr_str = ft_itoa(nbr);
-		else if (spec.type == 'u')
-			nbr_str = ft_itoa_x(nbr, 10, 0);
-		else if (spec.type == 'x')
-			nbr_str = ft_itoa_x(nbr, 16, 0);
-		else if (spec.type == 'X')
-			nbr_str = ft_itoa_x(nbr, 16, 1);
+	// if ((nbr == 0) && (spec.accuracy != -1))
+	// 	nbr_str = ft_strdup("");
+	// else
+	// 	if ((spec.type == 'd') || (spec.type == 'i'))
+	// 		nbr_str = ft_itoa(nbr);
+	// 	else if (spec.type == 'u')
+	// 		nbr_str = ft_itoa_x(nbr, 10, 0);
+	// 	else if (spec.type == 'x')
+	// 		nbr_str = ft_itoa_x(nbr, 16, 0);
+	// 	else if (spec.type == 'X')
+	// 		nbr_str = ft_itoa_x(nbr, 16, 1);
 
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
-		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
+		nbr_str = ft_str_acc(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
 	return (nbr_str);
 }
 
