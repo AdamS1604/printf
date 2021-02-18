@@ -70,7 +70,7 @@ int		ft_handler_u(va_list ap, t_spec spec)
 	else
 		str = ft_itoa_u(nbr, 10, 0);
 	
-	ft_str_add_accuracy(ap, spec, &str);
+	str = ft_str_add_accuracy(ap, spec, str);
 	return (ft_handler_str(ap, spec, &str, 0));
 }
 
@@ -80,14 +80,13 @@ int		ft_handler_p(va_list ap, t_spec spec)
 	char *str;
 	char *tmp;
 
-	// spec.accuracy = -1;
 	nbr = va_arg(ap, unsigned long long);
 	if (nbr == 0)
 		str = ft_strdup("(nil)");
 	else
 	{
 		str = ft_itoa_ull(nbr, 16);
-		ft_str_add_accuracy(ap, spec, &str);
+		str = ft_str_add_accuracy(ap, spec, str);
 		tmp = str;
 		str = ft_strjoin("0x", str);
 		free(tmp);
@@ -110,7 +109,7 @@ int		ft_handler_xX(va_list ap, t_spec spec)
 		else if (spec.type == 'X')
 			str = ft_itoa_u(nbr, 16, 1);
 
-	ft_str_add_accuracy(ap, spec, &str);
+	str = ft_str_add_accuracy(ap, spec, str);
 	return (ft_handler_str(ap, spec, &str, 0));
 }
 
@@ -132,7 +131,7 @@ int		ft_handler_di(va_list ap, t_spec spec)
 	else
 		str = ft_itoa_u(nbr, 10 , 0);
 
-	ft_str_add_accuracy(ap, spec, &str);
+	str = ft_str_add_accuracy(ap, spec, str);
 	return (ft_handler_str(ap, spec, &str, minus));
 }
 

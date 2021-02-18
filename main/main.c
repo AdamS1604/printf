@@ -24,6 +24,8 @@ int		main(void)
 	// ft_test("%16.*s");
 	ft_test("%.3u");
 	ft_test("%10.123u");
+	ft_test("%10.123u");
+	ft_test("%10.123u");
 	ft_test("%4.1u");
 	ft_test("%.3u");
 

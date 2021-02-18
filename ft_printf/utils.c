@@ -334,7 +334,7 @@ char			*ft_itoa_ull(unsigned long long int n, int base)
 }
 
 // ! void ??? or returns smth
-char	*ft_str_add_accuracy(va_list ap, t_spec spec, char **nbr_str)
+char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 {
 	int nbr_len;
 	char *new_str;
@@ -342,18 +342,19 @@ char	*ft_str_add_accuracy(va_list ap, t_spec spec, char **nbr_str)
 	int i;
 	int k;
 
-	nbr_len = ft_strlen(*nbr_str);
+	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
 	{
+		// todo need errors in this ft in 2 places
 		i = spec.accuracy - nbr_len;
 		k = 0;
-		new_str = (char *)ft_calloc(spec.accuracy, sizeof(char));
+		new_str = (char *)ft_calloc(spec.accuracy + 1, sizeof(char));
 		while (i--)
 			new_str[k++] = '0';
-		tmp = *nbr_str;
-		*nbr_str = ft_strjoin(new_str, *nbr_str);
+		tmp = nbr_str;
+		nbr_str = ft_strjoin(new_str, nbr_str);
 		free(tmp);
 		free(new_str);
 	}
-	return (*nbr_str);
+	return (nbr_str);
 }
