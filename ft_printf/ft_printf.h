@@ -34,6 +34,8 @@ char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 //
 char	*ft_strupcase(char *str);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t number, size_t size);
 char	*ft_itoa_u(unsigned int n, int base, int flag);
 char	*ft_itoa_ull(unsigned long long int n, int base);
 
@@ -60,7 +62,7 @@ int		ft_handler_di(va_list ap, t_spec spec);
 
 int		ft_minus(int *nbr);
 char	*ft_str_acc(int i, int j, char **str);
-char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str);
+char	*ft_str_add_accuracy(va_list ap, t_spec spec, char **nbr_str);
 
 int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus);
 int		ft_format_out(const char **format, t_spec spec);

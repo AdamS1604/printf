@@ -8,25 +8,20 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 10);
+	j = printf(str, 3267);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 10);
+	i = ft_printf(str, 3267);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
 
 int		main(void)
 {
-	ft_test("%u");
-	ft_test("%10u");
-	ft_test("%10u");
-	ft_test("%.10u");
-	ft_test("%.15u");
-	ft_test("%.5u");
+	ft_test("%3.7i");
 
     return (0);
 }

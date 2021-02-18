@@ -1,5 +1,6 @@
 #include "ft_printf.h"
 
+// handler controller
 int		ft_handler_hub(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c') 
@@ -19,6 +20,8 @@ int		ft_handler_hub(va_list ap, t_spec spec)
 		return (ft_putchar('%'));
 	return (0);
 }
+
+// ALL HANDLERS
 
 // GOOD
 int		ft_handler_c(va_list ap, t_spec spec)
@@ -67,7 +70,7 @@ int		ft_handler_u(va_list ap, t_spec spec)
 	else
 		str = ft_itoa_u(nbr, 10, 0);
 	
-	str = ft_str_add_accuracy(ap, spec, str);
+	ft_str_add_accuracy(ap, spec, &str);
 	return (ft_handler_str(ap, spec, &str, 0));
 }
 
@@ -84,7 +87,7 @@ int		ft_handler_p(va_list ap, t_spec spec)
 	else
 	{
 		str = ft_itoa_ull(nbr, 16);
-		str = ft_str_add_accuracy(ap, spec, str);
+		ft_str_add_accuracy(ap, spec, &str);
 		tmp = str;
 		str = ft_strjoin("0x", str);
 		free(tmp);
@@ -107,7 +110,7 @@ int		ft_handler_xX(va_list ap, t_spec spec)
 		else if (spec.type == 'X')
 			str = ft_itoa_u(nbr, 16, 1);
 
-	str = ft_str_add_accuracy(ap, spec, str);
+	ft_str_add_accuracy(ap, spec, &str);
 	return (ft_handler_str(ap, spec, &str, 0));
 }
 
@@ -129,38 +132,40 @@ int		ft_handler_di(va_list ap, t_spec spec)
 	else
 		str = ft_itoa_u(nbr, 10 , 0);
 
-	str = ft_str_add_accuracy(ap, spec, str);
+	ft_str_add_accuracy(ap, spec, &str);
 	return (ft_handler_str(ap, spec, &str, minus));
 }
 
-char	*ft_str_acc(int i, int j, char **str)
+
+// util
+char	*ft_str_add_accuracy(va_list ap, t_spec spec, char **nbr_str)
 {
-	int k;
+	int nbr_len;
 	char *new_str;
 	char *tmp;
+	int i;
+	int j;
+	int k;
 
-	k = 0;
-	new_str = malloc((sizeof(char) * j));
-	while (i--)
-		new_str[k++] = '0';
-	tmp = new_str;
-	new_str = ft_strjoin(new_str, *str);
-	free(tmp);
-	return (new_str);
-}
-
-// ! pass ** ?
-char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
-{
-	int nbr_len;		// length of number
-	char *tmp;
-
-	nbr_len = ft_strlen(nbr_str);
+	nbr_len = ft_strlen(*nbr_str);
 	if (spec.accuracy > nbr_len)
-		nbr_str = ft_str_acc(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
-	return (nbr_str);
+	{
+		i = spec.accuracy - nbr_len;
+		k = 0;
+		new_str = (char *)ft_calloc(spec.accuracy, sizeof(char));
+		while (i--)
+			new_str[k++] = '0';
+		tmp = *nbr_str;
+		*nbr_str = ft_strjoin(new_str, *nbr_str);
+		free(tmp);
+		free(new_str);
+	}
+	return (*nbr_str);
 }
 
+// todo corp this ft
+
+// diupxX str hanler
 int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 {
 	int str_len;
@@ -201,7 +206,7 @@ int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-// ! DEFEND LEAKS ALL (if no mem at heap also)
+//TODO FORMAT TEST
 
 // int		ft_format_out(const char **format, t_spec spec)
 // {
