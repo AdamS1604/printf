@@ -30,12 +30,11 @@ char    *ft_strchr(const char *s, int c);
 int		ft_atoi(const char *str1);
 
 // ...
-char	*ft_itoa(int n);
 char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 //
 char	*ft_strupcase(char *str);
-char	*ft_itoa_x(unsigned int n, int base, int flag);
+char	*ft_itoa_u(unsigned int n, int base, int flag);
 char	*ft_itoa_p(unsigned long long int n, int base);
 
 // ft_printf.c
@@ -50,10 +49,19 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec);
 int		ft_parser(va_list ap, const char *format, t_spec *spec);
 
 // handler.c
-int		ft_handler(va_list ap, t_spec spec);
+int		ft_handler_hub(va_list ap, t_spec spec);
+
 int		ft_handler_c(va_list ap, t_spec spec);
 int		ft_handler_s(va_list ap, t_spec spec);
-int  	ft_handler_dixXp(va_list ap, t_spec spec);
+int		ft_handler_u(va_list ap, t_spec spec);
+int		ft_handler_p(va_list ap, t_spec spec);
+int		ft_handler_xX(va_list ap, t_spec spec);
+int		ft_handler_di(va_list ap, t_spec spec);
+
+int		ft_minus(int *nbr);
+char	*ft_str_acc(int i, int j, char **str);
+char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str);
+
 int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus);
 int		ft_format_out(const char **format, t_spec spec);
 

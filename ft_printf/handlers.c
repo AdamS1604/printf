@@ -1,17 +1,26 @@
 #include "ft_printf.h"
 
-int		ft_handler(va_list ap, t_spec spec)
+int		ft_handler_hub(va_list ap, t_spec spec)
 {
-	if (spec.type == 'c') // done
-		return (ft_handler_c(ap, spec));
-	if (spec.type == 's') // done
-		return (ft_handler_s(ap, spec));
-	if (ft_strchr("dixXpu", spec.type)) // in progress
-		return (ft_handler_dixXp(ap, spec));
+	if (spec.type == 'c') 
+		return (ft_handler_c(ap, spec)); //done
+	if (spec.type == 's') 
+		return (ft_handler_s(ap, spec)); //done
+	if (spec.type == 'u')
+		return (ft_handler_u(ap, spec));
+	if (spec.type == 'p')
+		return (ft_handler_p(ap, spec));
+	if ((spec.type == 'x') || (spec.type == 'X'))
+		return (ft_handler_xX(ap, spec));
+	if ((spec.type == 'd') || (spec.type == 'i'))
+		return (ft_handler_di(ap, spec));
+	//! Threat this different? just identify this as invalid flag
 	if (spec.type == '%')
 		return (ft_putchar('%'));
 	return (0);
 }
+
+// TODO defend all there handlers from malloc errors
 
 int		ft_handler_c(va_list ap, t_spec spec)
 {
@@ -47,7 +56,73 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-// ! DEFEND LEAKS ALL
+int		ft_handler_u(va_list ap, t_spec spec)
+{
+	unsigned int nbr;
+	char *str;
+
+	nbr = va_arg(ap, unsigned int);
+	if ((nbr == 0) && (spec.accuracy != -1))
+		str = ft_strdup("");
+	else
+		str = ft_itoa_u(nbr, 10, 0);
+	
+	str = ft_str_add_accuracy(ap, spec, str);
+	return (ft_handler_str(ap, spec, &str, 0));
+}
+
+int		ft_handler_p(va_list ap, t_spec spec)
+{
+	unsigned long long nbr;
+	char *str;
+
+	spec.accuracy = -1;
+	nbr = va_arg(ap, unsigned long long);
+	if (nbr == 0)
+		str = ft_strdup("(nil)");
+	else
+		str = ft_itoa_p(nbr, 16);
+	
+	return(ft_handler_str(ap, spec, &str, 0));
+}
+
+int		ft_handler_xX(va_list ap, t_spec spec)
+{
+	unsigned int nbr;
+	int minus;
+	char *str;
+
+	nbr = va_arg(ap, unsigned int);
+	if ((nbr == 0) && (spec.accuracy != -1))
+		str = ft_strdup("");
+	else
+		if (spec.type == 'x')
+			str = ft_itoa_u(nbr, 16, 0);
+		else if (spec.type == 'X')
+			str = ft_itoa_u(nbr, 16, 1);
+
+	str = ft_str_add_accuracy(ap, spec, str);
+	return (ft_handler_str(ap, spec, &str, 0));
+}
+
+int		ft_handler_di(va_list ap, t_spec spec)
+{
+	int nbr;
+	int minus;
+	char *str;
+
+	nbr = va_arg(ap, int);
+	minus = ft_minus(&nbr);
+	if ((nbr == 0) && (spec.accuracy != -1))
+		str = ft_strdup("");
+	else
+		str = ft_itoa_u(nbr, 10 , 0);
+
+	str = ft_str_add_accuracy(ap, spec, str);
+	return (ft_handler_str(ap, spec, &str, minus));
+}
+
+// util
 
 int		ft_minus(int *nbr)
 {
@@ -59,7 +134,7 @@ int		ft_minus(int *nbr)
 	return (0);
 }
 
-char	*ft_str_make(int i, int j, char **str)
+char	*ft_str_acc(int i, int j, char **str)
 {
 	int k;
 	char *new_str;
@@ -78,31 +153,18 @@ char	*ft_str_make(int i, int j, char **str)
 	return (new_str);
 }
 
-// positive number to str
-char	*ft_nbr_to_str(va_list ap, t_spec spec, int nbr)
+char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 {
 	int nbr_len;		// length of number
-	char *nbr_str;		// same number but positive and written to string
 	char *tmp;
-
-	nbr_str = 0;
-	if ((nbr == 0) && (spec.accuracy != -1))
-		nbr_str = ft_strdup("");
-	else
-		if ((spec.type == 'd') || (spec.type == 'i'))
-			nbr_str = ft_itoa(nbr);
-		else if (spec.type == 'u')
-			nbr_str = ft_itoa_x(nbr, 10, 0);
-		else if (spec.type == 'x')
-			nbr_str = ft_itoa_x(nbr, 16, 0);
-		else if (spec.type == 'X')
-			nbr_str = ft_itoa_x(nbr, 16, 1);
 
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
-		nbr_str = ft_str_make(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
+		nbr_str = ft_str_acc(spec.accuracy - nbr_len, spec.accuracy, &nbr_str);
 	return (nbr_str);
 }
+
+// end util
 
 int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 {
@@ -142,44 +204,6 @@ int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus)
 
 	free(*str);
 	return ((str_len > spec.width) ? str_len : spec.width);
-}
-
-// TODO separate this
-int  	ft_handler_dixXp(va_list ap, t_spec spec)
-{
-	int nbr;
-	unsigned long long ptr;
-	int minus;
-	char *str;
-
-	minus = 0;
-	if (spec.type == 'p')
-	{
-		spec.accuracy = -1;
-		if ((ptr = va_arg(ap, unsigned long long)) == 0)
-			str = ft_strdup("(nil)");
-		else
-			str = ft_itoa_p(ptr, 16);
-	}
-	else if (spec.type == 'u')
-	{
-		nbr = va_arg(ap, unsigned int);
-		str = ft_nbr_to_str(ap, spec, nbr);
-	}
-	else if ((spec.type == 'x') || (spec.type == 'X'))
-	{
-		nbr = va_arg(ap, unsigned int);
-		minus = ft_minus(&nbr);
-		str = ft_nbr_to_str(ap, spec, nbr);
-	}
-	else
-	{
-		nbr = va_arg(ap, int);
-		minus = ft_minus(&nbr);
-		str = ft_nbr_to_str(ap, spec, nbr);
-	}
-
-	return (ft_handler_str(ap, spec, &str, minus));
 }
 
 // ! DEFEND LEAKS ALL (if no mem at heap also)

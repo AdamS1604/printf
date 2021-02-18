@@ -1,14 +1,14 @@
 #include "ft_printf.h"
 
-int     ft_handler_ap(va_list ap, const char **format)
+int		ft_handler_ap(va_list ap, const char **format)
 {
-    int len;
+	int len;
     int parse;
     t_spec spec;
 
 	// parse flags (++ cuz skip %)
     parse = ft_parser(ap, ++(*format), &spec);
- 
+
     // invalid flag and nothing more to output
     if (parse == 0)
         return (-1);
@@ -18,7 +18,7 @@ int     ft_handler_ap(va_list ap, const char **format)
     // output ap
     else if ((parse *= -1) > 0)
 		// TODO should return - 1 on error
-        len = ft_handler(ap, spec);
+        len = ft_handler_hub(ap, spec);
 
 	// increace foramt (move)
     (*format) += parse;
