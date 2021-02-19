@@ -286,7 +286,7 @@ char			*ft_itoa_u(unsigned int n, int base, int flag)
 	size = init_size_u(n, base);
 	num = n;
 	if (!(str = (char*)ft_calloc(size + 1, 1)))
-		return (str);
+		return (0);
 	if (flag == 1)
 		arr_base = "0123456789ABCDEF";
 	else
@@ -348,7 +348,8 @@ char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 		// todo need errors in this ft in 2 places
 		i = spec.accuracy - nbr_len;
 		k = 0;
-		new_str = (char *)ft_calloc(spec.accuracy + 1, sizeof(char));
+		if (!(new_str = (char *)ft_calloc(spec.accuracy + 1, sizeof(char))))
+			return (0);
 		while (i--)
 			new_str[k++] = '0';
 		tmp = nbr_str;

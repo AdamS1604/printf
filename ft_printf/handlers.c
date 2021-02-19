@@ -70,8 +70,13 @@ int		ft_handler_u(va_list ap, t_spec spec)
 	else
 		str = ft_itoa_u(nbr, 10, 0);
 	
-	str = ft_str_add_accuracy(ap, spec, str);
-	return (ft_handler_str(ap, spec, &str, 0));
+	if (str == 0)
+		return (-1);
+	
+	if (!(str = ft_str_add_accuracy(ap, spec, str)))
+		return (-1);
+	else
+		return (ft_handler_str(ap, spec, &str, 0));
 }
 
 int		ft_handler_p(va_list ap, t_spec spec)
