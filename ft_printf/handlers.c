@@ -43,7 +43,7 @@ int		ft_handler_s(va_list ap, t_spec spec)
 
 	str = va_arg(ap, char*);
 	if (str == 0)
-		if ((spec.accuracy >= 6) || (spec.accuracy == -1))
+		if ((spec.accuracy >= 6) || (spec.accuracy == -1) || (spec.accuracy < -1))
 			str = "(null)";
 		else
 			str = "";
@@ -142,7 +142,7 @@ int		ft_handler_di(va_list ap, t_spec spec)
 		nbr *= -1;
 		minus = 1;
 	}
-	if ((nbr == 0) && (spec.accuracy != -1))
+	if ((nbr == 0) && (spec.accuracy > -1))
 		str = ft_strdup("");
 	else
 		str = ft_itoa_u(nbr, 10 , 0);
