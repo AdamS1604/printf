@@ -59,6 +59,7 @@ int		ft_handler_s(va_list ap, t_spec spec)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
+// GOOD
 int		ft_handler_u(va_list ap, t_spec spec)
 {
 	unsigned int nbr;
@@ -79,6 +80,7 @@ int		ft_handler_u(va_list ap, t_spec spec)
 		return (ft_handler_str(ap, spec, &str, 0));
 }
 
+// GOOD
 int		ft_handler_p(va_list ap, t_spec spec)
 {
 	unsigned long long nbr;
@@ -90,12 +92,14 @@ int		ft_handler_p(va_list ap, t_spec spec)
 		str = ft_strdup("(nil)");
 	else
 	{
-		str = ft_itoa_ull(nbr, 16);
-		str = ft_str_add_accuracy(ap, spec, str);
+		if (!(str = ft_str_add_accuracy(ap, spec, ft_itoa_ull(nbr, 16))))
+			return (-1);
 		tmp = str;
 		str = ft_strjoin("0x", str);
 		free(tmp);
 	}
+	if (!(str))
+		return (-1);
 	return(ft_handler_str(ap, spec, &str, 0));
 }
 

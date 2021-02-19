@@ -5,6 +5,9 @@ size_t	ft_strlen(const char *str)
 	int i;
 
 	i = 0;
+	// ! def or problem ?
+	if (!(str))
+		return (-1);
 	while (*(str++))
 		i++;
 	return (i);
@@ -333,8 +336,7 @@ char			*ft_itoa_ull(unsigned long long int n, int base)
 	return (str);
 }
 
-// ! void ??? or returns smth
-char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
+char			*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 {
 	int nbr_len;
 	char *new_str;
@@ -342,6 +344,8 @@ char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
 	int i;
 	int k;
 
+	if (nbr_str == 0)
+		return (0);
 	nbr_len = ft_strlen(nbr_str);
 	if (spec.accuracy > nbr_len)
 	{
