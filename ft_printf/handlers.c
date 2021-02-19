@@ -15,7 +15,6 @@ int		ft_handler_hub(va_list ap, t_spec spec)
 		return (ft_handler_xX(ap, spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
 		return (ft_handler_di(ap, spec));
-	//! Threat this different? just identify this as invalid flag
 	if (spec.type == '%')
 		return (ft_putchar('%'));
 	return (0);

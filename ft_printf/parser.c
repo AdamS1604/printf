@@ -4,7 +4,7 @@ int		ft_flags_parser(const char **format, t_spec **spec)
 {
 	int len;
 	len = 0;
-	while ((ft_strchr("-0 ", **format)))
+	while ((**format == ' ') || (**format == '0') || (**format == '-'))
 	{
 		if ((**format == '-') && ((*spec)->flag != '-'))
 			(*spec)->flag = **format;
@@ -77,7 +77,6 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 	len = ft_flags_parser(&format, &spec);
 	len += ft_width_parser(ap, &format, &spec);
 	a_len = ft_accuracy_parser(ap, &format, &spec);
-
 	if (*format == '\0')
 		return (0);
 	else if (a_len < 0)
