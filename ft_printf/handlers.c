@@ -103,6 +103,7 @@ int		ft_handler_p(va_list ap, t_spec spec)
 	return(ft_handler_str(ap, spec, &str, 0));
 }
 
+// GOOD
 int		ft_handler_xX(va_list ap, t_spec spec)
 {
 	unsigned int nbr;
@@ -118,10 +119,16 @@ int		ft_handler_xX(va_list ap, t_spec spec)
 		else if (spec.type == 'X')
 			str = ft_itoa_u(nbr, 16, 1);
 
-	str = ft_str_add_accuracy(ap, spec, str);
-	return (ft_handler_str(ap, spec, &str, 0));
+	if (!(str))
+		return (-1);
+
+	if (!(str = ft_str_add_accuracy(ap, spec, str)))
+		return (-1);
+	else
+		return (ft_handler_str(ap, spec, &str, 0));
 }
 
+// GOOD
 int		ft_handler_di(va_list ap, t_spec spec)
 {
 	int nbr;
@@ -139,9 +146,14 @@ int		ft_handler_di(va_list ap, t_spec spec)
 		str = ft_strdup("");
 	else
 		str = ft_itoa_u(nbr, 10 , 0);
+	
+	if (!(str))
+		return (-1);
 
-	str = ft_str_add_accuracy(ap, spec, str);
-	return (ft_handler_str(ap, spec, &str, minus));
+	if (!(str = ft_str_add_accuracy(ap, spec, str)))
+		return (-1);
+	else
+		return (ft_handler_str(ap, spec, &str, minus));
 }
 
 // todo corp this ft
