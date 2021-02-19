@@ -41,8 +41,6 @@ char	*ft_itoa_ull(unsigned long long int n, int base);
 char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str);
 
 // ft_printf.c
-int		ft_handler_ap(va_list ap, const char **format);
-int		ft_print_all(va_list ap, const char *format);
 int		ft_printf(const char *format, ...);
 
 // parser.c

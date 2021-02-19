@@ -1,29 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
+/*   Updated: 2021/02/20 01:10:36 by abronn           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int		ft_handler_ap(va_list ap, const char **format)
+int		ft_main_hub(va_list ap, const char **format)
 {
-	int len;
-    int parse;
-    t_spec spec;
+	int		len;
+	int		parse;
+	t_spec	spec;
 
-	// parse flags (++ cuz skip %)
-    parse = ft_parser(ap, ++(*format), &spec);
-
-    // invalid flag and nothing more to output
-    if (parse == 0)
-        return (-1);
-    // output invalid foramt
-    else if (parse > 0)
-        len = ft_format_out(format, spec);
-    // output ap
-    else if ((parse *= -1) > 0)
-		// TODO should return - 1 on error
-        len = ft_handler_hub(ap, spec);
-
-	// increace foramt (move)
-    (*format) += parse;
-    // mallocs defence
-    return ((len < 0) ? -1 : len);
+	parse = ft_parser(ap, ++(*format), &spec);
+	if (parse == 0)
+		return (-1);
+	else if (parse > 0)
+		len = ft_format_out(format, spec);
+	else if ((parse *= -1) > 0)
+		len = ft_handler_hub(ap, spec);
+	(*format) += parse;
+	return ((len < 0) ? -1 : len);
 }
 
 int		ft_print_all(va_list ap, const char *format)
@@ -34,9 +37,10 @@ int		ft_print_all(va_list ap, const char *format)
 	len = 0;
 	while (*format)
 		if ((*format == '%'))
-			if ((*(format + 1) == '\0') || ((tmp = ft_handler_ap(ap, &format)) == -1))
+			if ((*(format + 1) == '\0') ||
+			((tmp = ft_main_hub(ap, &format)) == -1))
 				return (-1);
-			else 
+			else
 				len += tmp;
 		else
 			len += ft_putchar(*(format++));
@@ -45,8 +49,8 @@ int		ft_print_all(va_list ap, const char *format)
 
 int		ft_printf(const char *format, ...)
 {
-    va_list ap;
-	int len;
+	va_list	ap;
+	int		len;
 
 	if (!format)
 		return (-1);
@@ -55,3 +59,10 @@ int		ft_printf(const char *format, ...)
 	va_end(ap);
 	return (len);
 }
+
+// todo norme
+// todo cut functions
+// todo rename functions
+
+// todo learn how to add library
+// todo ^ try connecting my libfprintf.a to main to learn
