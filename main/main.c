@@ -21,6 +21,6 @@ void	ft_test(char *str)
 
 int		main(void)
 {
-	ft_test("% d");
+	ft_test("% 0-10d");
     return (0);
 }

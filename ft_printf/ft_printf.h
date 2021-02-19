@@ -44,22 +44,12 @@ char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str);
 int		ft_printf(const char *format, ...);
 
 // parser.c
-int		ft_flags_parser(const char **format, t_spec **spec);
-int		ft_width_parser(va_list ap, const char **format, t_spec **spec);
-int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec);
 int		ft_parser(va_list ap, const char *format, t_spec *spec);
 
 // handler.c
-int		ft_handler_hub(va_list ap, t_spec spec);
 
-int		ft_handler_c(va_list ap, t_spec spec);
-int		ft_handler_s(va_list ap, t_spec spec);
-int		ft_handler_u(va_list ap, t_spec spec);
-int		ft_handler_p(va_list ap, t_spec spec);
-int		ft_handler_xX(va_list ap, t_spec spec);
-int		ft_handler_di(va_list ap, t_spec spec);
-
-int		ft_handler_str(va_list ap, t_spec spec, char **str, int minus);
+int		ft_ap_handler_hub(va_list ap, t_spec spec);
+int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus);
 int		ft_format_out(const char **format, t_spec spec);
 
 #endif
