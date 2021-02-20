@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 19:07:36 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 00:52:43 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_main_hub(va_list ap, const char **format)
 	int		parse;
 	t_spec	spec;
 
+	len = 0;
 	parse = ft_parser(ap, ++(*format), &spec);
 	if (parse == 0)
 		return (-1);

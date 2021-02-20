@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:14:48 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:18:59 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 00:53:08 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		ft_handler_x(va_list ap, t_spec spec)
 	unsigned int	nbr;
 	char			*str;
 
+	str = 0;
 	nbr = va_arg(ap, unsigned int);
 	if ((nbr == 0) && (spec.accuracy != -1))
 		str = ft_strdup("");
