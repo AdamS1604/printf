@@ -6,7 +6,7 @@
 #    By: abronn <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/20 20:00:28 by abronn            #+#    #+#              #
-#    Updated: 2021/02/21 01:36:59 by abronn           ###   ########.fr        #
+#    Updated: 2021/02/21 01:40:39 by abronn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,6 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 
 $(NAME):	$(OBJS)
 			@ar rcs $(NAME) $(OBJS)
-			@make clean
 		
 all:		$(NAME)
 
