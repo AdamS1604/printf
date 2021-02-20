@@ -13,12 +13,13 @@ int		ft_handler_c(va_list ap, t_spec spec)
 
 int		ft_handler_s(va_list ap, t_spec spec)
 {
-	char *str;
-	int str_len;
+	char	*str;
+	int		str_len;
 
 	str = va_arg(ap, char*);
 	if (str == 0)
-		if ((spec.accuracy >= 6) || (spec.accuracy == -1) || (spec.accuracy < -1))
+		if ((spec.accuracy >= 6) ||
+		(spec.accuracy == -1) || (spec.accuracy < -1))
 			str = "(null)";
 		else
 			str = "";
@@ -36,8 +37,8 @@ int		ft_handler_s(va_list ap, t_spec spec)
 
 int		ft_handler_u(va_list ap, t_spec spec)
 {
-	unsigned int nbr;
-	char *str;
+	unsigned int	nbr;
+	char			*str;
 
 	nbr = va_arg(ap, unsigned int);
 	if ((nbr == 0) && (spec.accuracy != -1))
@@ -54,9 +55,9 @@ int		ft_handler_u(va_list ap, t_spec spec)
 
 int		ft_handler_p(va_list ap, t_spec spec)
 {
-	unsigned long long nbr;
-	char *str;
-	char *tmp;
+	unsigned long long	nbr;
+	char				*str;
+	char				*tmp;
 
 	nbr = va_arg(ap, unsigned long long);
 	if (nbr == 0)
@@ -71,23 +72,25 @@ int		ft_handler_p(va_list ap, t_spec spec)
 	}
 	if (!(str))
 		return (-1);
-	return(ft_num_str_out(ap, spec, &str, 0));
+	return (ft_num_str_out(ap, spec, &str, 0));
 }
 
-int		ft_handler_xX(va_list ap, t_spec spec)
+int		ft_handler_x(va_list ap, t_spec spec)
 {
-	unsigned int nbr;
-	int minus;
-	char *str;
+	unsigned int	nbr;
+	int				minus;
+	char			*str;
 
 	nbr = va_arg(ap, unsigned int);
 	if ((nbr == 0) && (spec.accuracy != -1))
 		str = ft_strdup("");
 	else
+	{
 		if (spec.type == 'x')
 			str = ft_itoa_u(nbr, 16, 0);
 		else if (spec.type == 'X')
 			str = ft_itoa_u(nbr, 16, 1);
+	}
 	if (!(str))
 		return (-1);
 	if (!(str = ft_str_add_accuracy(ap, spec, str)))
@@ -98,9 +101,9 @@ int		ft_handler_xX(va_list ap, t_spec spec)
 
 int		ft_handler_di(va_list ap, t_spec spec)
 {
-	int nbr;
-	int minus;
-	char *str;
+	int		nbr;
+	int		minus;
+	char	*str;
 
 	nbr = va_arg(ap, int);
 	minus = 0;
@@ -112,7 +115,7 @@ int		ft_handler_di(va_list ap, t_spec spec)
 	if ((nbr == 0) && (spec.accuracy > -1))
 		str = ft_strdup("");
 	else
-		str = ft_itoa_u(nbr, 10 , 0);
+		str = ft_itoa_u(nbr, 10, 0);
 	if (!(str))
 		return (-1);
 	if (!(str = ft_str_add_accuracy(ap, spec, str)))
@@ -124,15 +127,15 @@ int		ft_handler_di(va_list ap, t_spec spec)
 int		ft_ap_handler_hub(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c')
-		return (ft_handler_c(ap, spec)); //done
+		return (ft_handler_c(ap, spec));
 	if (spec.type == 's')
-		return (ft_handler_s(ap, spec)); //done
+		return (ft_handler_s(ap, spec));
 	if (spec.type == 'u')
 		return (ft_handler_u(ap, spec));
 	if (spec.type == 'p')
 		return (ft_handler_p(ap, spec));
 	if ((spec.type == 'x') || (spec.type == 'X'))
-		return (ft_handler_xX(ap, spec));
+		return (ft_handler_x(ap, spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
 		return (ft_handler_di(ap, spec));
 	if (spec.type == '%')
@@ -140,36 +143,27 @@ int		ft_ap_handler_hub(va_list ap, t_spec spec)
 	return (0);
 }
 
-// todo corp
-
 int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 {
 	int str_len;
-	str_len = ft_strlen(*str) + minus;
 
-	// 0 flag and accuracy
+	str_len = ft_strlen(*str) + minus;
 	if ((spec.flag == '0') && (spec.accuracy > -1))
 		spec.flag = '_';
-
-	// minus at begining
-	if (((minus == 1) && (spec.flag != '_')) || ((minus == 1) && (spec.width <= str_len)))
+	if (((minus == 1) && (spec.flag != '_')) ||
+	((minus == 1) && (spec.width <= str_len)))
 		ft_putchar('-');
-	
-	// space
 	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
 	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
 		str_len += ft_putchar(' ');
-	
-	// main
 	if (spec.width > str_len)
 	{
- 		if (spec.flag == '-')
+		if (spec.flag == '-')
 			ft_putstr_len(str_len, *str);
 		if ((spec.flag == '0') && (spec.accuracy < 0))
 			ft_print_char_times(spec.width - str_len, '0');
 		else
 			ft_print_char_times(spec.width - str_len, ' ');
-		// minus at the end
 		if ((minus == 1) && (spec.flag == '_'))
 			ft_putchar('-');
 		if (spec.flag != '-')
@@ -177,12 +171,9 @@ int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 	}
 	else
 		ft_putstr_len(str_len, *str);
-
 	free(*str);
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
-
-// todo corp
 
 int		ft_format_out(const char **format, t_spec spec)
 {
