@@ -143,6 +143,20 @@ int		ft_ap_handler_hub(va_list ap, t_spec spec)
 	return (0);
 }
 
+void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
+{
+	if (spec.flag == '-')
+		ft_putstr_len(str_len, str);
+	if ((spec.flag == '0') && (spec.accuracy < 0))
+		ft_print_char_times(spec.width - str_len, '0');
+	else
+		ft_print_char_times(spec.width - str_len, ' ');
+	if ((minus == 1) && (spec.flag == '_'))
+		ft_putchar('-');
+	if (spec.flag != '-')
+		ft_putstr_len(str_len, str);
+}
+
 int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 {
 	int str_len;
@@ -157,22 +171,34 @@ int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
 		str_len += ft_putchar(' ');
 	if (spec.width > str_len)
-	{
-		if (spec.flag == '-')
-			ft_putstr_len(str_len, *str);
-		if ((spec.flag == '0') && (spec.accuracy < 0))
-			ft_print_char_times(spec.width - str_len, '0');
-		else
-			ft_print_char_times(spec.width - str_len, ' ');
-		if ((minus == 1) && (spec.flag == '_'))
-			ft_putchar('-');
-		if (spec.flag != '-')
-			ft_putstr_len(str_len, *str);
-	}
+		ft_util_width_out(spec, *str, str_len, minus);
 	else
 		ft_putstr_len(str_len, *str);
 	free(*str);
 	return ((str_len > spec.width) ? str_len : spec.width);
+}
+
+int		ft_util_dot_out(t_spec spec, const char **format)
+{
+	char	len;
+	int		tmp;
+
+	len = 0;
+	if ((*((*format) + 1) == '*') || (*((*format) + 1) == '-'))
+	{
+		len += ft_putchar('.');
+		if (*((*format) + 1) == '-')
+			len += ft_putchar('0');
+		ft_putnbr(spec.accuracy);
+		tmp = ft_get_nbr_len(spec.accuracy, 10);
+		len += tmp;
+		(*format) += tmp;
+	}
+	else if (*((*format) + 1) == '\0')
+		return (-1);
+	else
+		len += ft_putchar(**format);
+	return (len);
 }
 
 int		ft_format_out(const char **format, t_spec spec)
@@ -193,24 +219,13 @@ int		ft_format_out(const char **format, t_spec spec)
 			len += ft_get_nbr_len(spec.width, 10);
 		}
 		else if (**format == '.')
-			if ((*((*format) + 1) == '*') || (*((*format) + 1) == '-'))
-			{
-				len += ft_putchar('.');
-				if (*((*format) + 1) == '-')
-					len += ft_putchar('0');
-				ft_putnbr(spec.accuracy);
-				tmp = ft_get_nbr_len(spec.accuracy, 10);
-				len += tmp;
-				(*format) += tmp;
-			}
-			else if (*((*format) + 1) == '\0')
+			if ((tmp = ft_util_dot_out(spec, format)) == -1)
 				return (-1);
 			else
-				len += ft_putchar(**format);
+				len += tmp;
 		else
 			len += ft_putchar(**format);
 		(*format)++;
 	}
 	return (len);
-	return (0);
 }
