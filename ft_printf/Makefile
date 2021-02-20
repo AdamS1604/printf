@@ -6,17 +6,38 @@
 #    By: abronn <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/20 20:00:28 by abronn            #+#    #+#              #
-#    Updated: 2021/02/20 20:04:36 by abronn           ###   ########.fr        #
+#    Updated: 2021/02/20 20:44:40 by abronn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+OBJDIR = obj
+SRCDIR = src
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 NAME		= libftprintf.a
-SRCS		= ft_printf.c handlers_1.c handlers_2.c parser.c utils_lib1.c utils_lib2.c utils_lib3.c utils_lib4.c utils_p.c
-OBJS		= $(SRCS:.c=.o)
 
-%.o:	%.c
+SRCS		=	$(SRCDIR)/ft_printf.c \
+				$(SRCDIR)/handlers_1.c \
+				$(SRCDIR)/handlers_2.c \
+				$(SRCDIR)/parser.c \
+				$(SRCDIR)/utils_lib1.c \
+				$(SRCDIR)/utils_lib2.c \
+				$(SRCDIR)/utils_lib3.c \
+				$(SRCDIR)/utils_lib4.c \
+				$(SRCDIR)/utils_p.c
+
+OBJS		=	$(OBJDIR)/ft_printf.o  \
+				$(OBJDIR)/handlers_1.o \
+				$(OBJDIR)/handlers_2.o \
+				$(OBJDIR)/parser.o     \
+				$(OBJDIR)/utils_lib1.o \
+				$(OBJDIR)/utils_lib2.o \
+				$(OBJDIR)/utils_lib3.o \
+				$(OBJDIR)/utils_lib4.o \
+				$(OBJDIR)/utils_p.o
+
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c
 			$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJS)

@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:14:48 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:07:45 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:18:59 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_handler_p(va_list ap, t_spec spec)
 		str = ft_strdup("(nil)");
 	else
 	{
-		if (!(str = ft_str_add_accuracy(ap, spec, ft_itoa_ull(nbr, 16))))
+		if (!(str = ft_str_add_accuracy(spec, ft_itoa_ull(nbr, 16))))
 			return (-1);
 		tmp = str;
 		str = ft_strjoin("0x", str);
@@ -51,10 +51,9 @@ int		ft_handler_x(va_list ap, t_spec spec)
 	}
 	if (!(str))
 		return (-1);
-	if (!(str = ft_str_add_accuracy(ap, spec, str)))
+	if (!(str = ft_str_add_accuracy(spec, str)))
 		return (-1);
-	else
-		return (ft_num_str_out(spec, &str, 0));
+	return (ft_num_str_out(spec, &str, 0));
 }
 
 int		ft_handler_d(va_list ap, t_spec spec)
@@ -76,10 +75,9 @@ int		ft_handler_d(va_list ap, t_spec spec)
 		str = ft_itoa_u(nbr, 10, 0);
 	if (!(str))
 		return (-1);
-	if (!(str = ft_str_add_accuracy(ap, spec, str)))
+	if (!(str = ft_str_add_accuracy(spec, str)))
 		return (-1);
-	else
-		return (ft_num_str_out(spec, &str, minus));
+	return (ft_num_str_out(spec, &str, minus));
 }
 
 void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)

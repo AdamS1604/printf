@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:09:53 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:43:47 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		ft_get_nbr_len(int nbr, int base)
 
 int		ft_putstr_len(int len, char *s)
 {
-	int	i;
+	int		i;
 	int		str_len;
 
 	i = 0;
