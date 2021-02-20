@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 19:49:27 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:09:53 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		ft_get_nbr_len(int nbr, int base)
 
 int		ft_putstr_len(int len, char *s)
 {
-	size_t	i;
+	int	i;
 	int		str_len;
 
 	i = 0;
@@ -68,7 +68,7 @@ int		ft_putstr_len(int len, char *s)
 	return (i);
 }
 
-char	*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str)
+char	*ft_str_add_accuracy(t_spec spec, char *nbr_str)
 {
 	int		nbr_len;
 	char	*new_str;

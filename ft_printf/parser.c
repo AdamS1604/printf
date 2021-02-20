@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:00:35 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 19:03:28 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:08:25 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 
 	len = 0;
 	if (**format == '.')
+	{
 		if (*(++(*format)) == '*')
 		{
 			(*spec)->accuracy = va_arg(ap, int);
@@ -86,6 +87,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format);
 			(*format)--;
 		}
+	}
 	(*format) += len;
 	return (len);
 }

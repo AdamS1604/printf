@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:14:48 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 19:14:49 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:07:45 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ int		ft_handler_p(va_list ap, t_spec spec)
 	}
 	if (!(str))
 		return (-1);
-	return (ft_num_str_out(ap, spec, &str, 0));
+	return (ft_num_str_out(spec, &str, 0));
 }
 
 int		ft_handler_x(va_list ap, t_spec spec)
 {
 	unsigned int	nbr;
-	int				minus;
 	char			*str;
 
 	nbr = va_arg(ap, unsigned int);
@@ -55,7 +54,7 @@ int		ft_handler_x(va_list ap, t_spec spec)
 	if (!(str = ft_str_add_accuracy(ap, spec, str)))
 		return (-1);
 	else
-		return (ft_num_str_out(ap, spec, &str, 0));
+		return (ft_num_str_out(spec, &str, 0));
 }
 
 int		ft_handler_d(va_list ap, t_spec spec)
@@ -80,7 +79,7 @@ int		ft_handler_d(va_list ap, t_spec spec)
 	if (!(str = ft_str_add_accuracy(ap, spec, str)))
 		return (-1);
 	else
-		return (ft_num_str_out(ap, spec, &str, minus));
+		return (ft_num_str_out(spec, &str, minus));
 }
 
 void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
@@ -97,7 +96,7 @@ void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
 		ft_putstr_len(str_len, str);
 }
 
-int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
+int		ft_num_str_out(t_spec spec, char **str, int minus)
 {
 	int str_len;
 

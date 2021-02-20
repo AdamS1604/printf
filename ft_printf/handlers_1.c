@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:14:45 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 19:14:46 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:07:54 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ int		ft_handler_s(va_list ap, t_spec spec)
 
 	str = va_arg(ap, char*);
 	if (str == 0)
-		if ((spec.accuracy >= 6) ||
-		(spec.accuracy == -1) || (spec.accuracy < -1))
+	{
+		if ((spec.accuracy >= 6) || (spec.accuracy == -1) || (spec.accuracy < -1))
 			str = "(null)";
 		else
 			str = "";
+	}
 	str_len = ft_strlen(str);
 	if ((spec.accuracy < str_len) && (spec.accuracy > -1))
 		str_len = spec.accuracy;
@@ -62,7 +63,7 @@ int		ft_handler_u(va_list ap, t_spec spec)
 	if (!(str = ft_str_add_accuracy(ap, spec, str)))
 		return (-1);
 	else
-		return (ft_num_str_out(ap, spec, &str, 0));
+		return (ft_num_str_out(spec, &str, 0));
 }
 
 int		ft_util_dot_out(t_spec spec, const char **format)

@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:42:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 19:46:30 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 20:09:18 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t number, size_t size);
 char			*ft_itoa_u(unsigned int n, int base, int flag);
 char			*ft_itoa_ull(unsigned long long int n, int base);
-char			*ft_str_add_accuracy(va_list ap, t_spec spec, char *nbr_str);
+char			*ft_str_add_accuracy(t_spec spec, char *nbr_str);
 int				ft_parser(va_list ap, const char *format, t_spec *spec);
 int				ft_handler_c(va_list ap, t_spec spec);
 int				ft_handler_s(va_list ap, t_spec spec);
@@ -50,6 +50,6 @@ int				ft_spec_out(const char **format, t_spec spec);
 int				ft_handler_p(va_list ap, t_spec spec);
 int				ft_handler_x(va_list ap, t_spec spec);
 int				ft_handler_d(va_list ap, t_spec spec);
-int				ft_num_str_out(va_list ap, t_spec spec, char **str, int minus);
+int				ft_num_str_out(t_spec spec, char **str, int minus);
 
 #endif
