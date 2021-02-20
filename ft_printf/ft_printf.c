@@ -6,11 +6,30 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 17:21:24 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/20 19:07:36 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int		ft_handlers_hub(va_list ap, t_spec spec)
+{
+	if (spec.type == 'c')
+		return (ft_handler_c(ap, spec));
+	if (spec.type == 's')
+		return (ft_handler_s(ap, spec));
+	if (spec.type == 'u')
+		return (ft_handler_u(ap, spec));
+	if (spec.type == 'p')
+		return (ft_handler_p(ap, spec));
+	if ((spec.type == 'x') || (spec.type == 'X'))
+		return (ft_handler_x(ap, spec));
+	if ((spec.type == 'd') || (spec.type == 'i'))
+		return (ft_handler_d(ap, spec));
+	if (spec.type == '%')
+		return (ft_putchar('%'));
+	return (0);
+}
 
 int		ft_main_hub(va_list ap, const char **format)
 {
@@ -59,10 +78,3 @@ int		ft_printf(const char *format, ...)
 	va_end(ap);
 	return (len);
 }
-
-// todo norme
-// todo cut functions
-// todo rename functions
-
-// todo learn how to add library
-// todo ^ try connecting my libfprintf.a to main to learn

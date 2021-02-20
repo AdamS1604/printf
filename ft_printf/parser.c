@@ -1,8 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/20 19:00:35 by abronn            #+#    #+#             */
+/*   Updated: 2021/02/20 19:03:28 by abronn           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
+
+void	ft_init_spec(t_spec **spec)
+{
+	(*spec)->flag = '_';
+	(*spec)->space = 0;
+	(*spec)->width = 0;
+	(*spec)->accuracy = -1;
+	(*spec)->type = '_';
+}
 
 int		ft_flags_parser(const char **format, t_spec **spec)
 {
 	int len;
+
 	len = 0;
 	while ((**format == ' ') || (**format == '0') || (**format == '-'))
 	{
@@ -27,7 +49,7 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 	num = 0;
 	if (**format == '*')
 		(*spec)->width = va_arg(ap, int);
-	else if ((num = ft_atoi(*format)) != 0) // Можно в width просто класть результат атои сразу
+	else if ((num = ft_atoi(*format)) != 0)
 		(*spec)->width = num;
 	else
 		return (0);
@@ -61,18 +83,18 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 			(*spec)->accuracy = num;
 			if (num < 0)
 				return (-1);
-			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format); // + 1 тк еще надо пропустить .
+			len += ft_get_nbr_len(num, 10) + ft_zero_len(*format);
 			(*format)--;
 		}
 	(*format) += len;
-	return(len);
+	return (len);
 }
 
 int		ft_parser(va_list ap, const char *format, t_spec *spec)
 {
 	int len;
 	int a_len;
-	
+
 	ft_init_spec(&spec);
 	len = ft_flags_parser(&format, &spec);
 	len += ft_width_parser(ap, &format, &spec);
