@@ -140,28 +140,27 @@ int		ft_ap_handler_hub(va_list ap, t_spec spec)
 	return (0);
 }
 
-int		ft_flags_out(t_spec spec, int minus)
-{
-	int str_len;
-
-	str_len = 0;
-	if ((spec.flag == '0') && (spec.accuracy > -1))
-		spec.flag = '_';
-	if (((minus == 1) && (spec.flag != '_')) ||
-	((minus == 1) && (spec.width <= str_len)))
-		ft_putchar('-');
-	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
-	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
-		str_len += ft_putchar(' ');
-	return (str_len);
-}
+// todo corp
 
 int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 {
 	int str_len;
-
 	str_len = ft_strlen(*str) + minus;
-	str_len += ft_flags_out(spec, minus);
+
+	// 0 flag and accuracy
+	if ((spec.flag == '0') && (spec.accuracy > -1))
+		spec.flag = '_';
+
+	// minus at begining
+	if (((minus == 1) && (spec.flag != '_')) || ((minus == 1) && (spec.width <= str_len)))
+		ft_putchar('-');
+	
+	// space
+	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
+	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
+		str_len += ft_putchar(' ');
+	
+	// main
 	if (spec.width > str_len)
 	{
  		if (spec.flag == '-')
@@ -170,6 +169,7 @@ int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 			ft_print_char_times(spec.width - str_len, '0');
 		else
 			ft_print_char_times(spec.width - str_len, ' ');
+		// minus at the end
 		if ((minus == 1) && (spec.flag == '_'))
 			ft_putchar('-');
 		if (spec.flag != '-')
@@ -177,6 +177,7 @@ int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 	}
 	else
 		ft_putstr_len(str_len, *str);
+
 	free(*str);
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
