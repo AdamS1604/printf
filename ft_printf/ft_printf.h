@@ -1,19 +1,17 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stdio.h>
-# include <stdlib.h> // memory
+# include <stdlib.h>
 # include <stdarg.h>
-# include <unistd.h> // wsl
-// #include <io.h>   // win
+# include <unistd.h>
 
 typedef struct t_spec
 {
-	char flag;      // '-' '0'
-	int space;      //  1   0
-	int width;      // num or  0
-	int accuracy;   // num or -1
-	char type;      // '_' or d i u c s p x X
+	char flag;
+	int space;
+	int width;
+	int accuracy;
+	char type;
 } t_spec;
 
 // utils.c
@@ -29,10 +27,9 @@ void	ft_putnbr(int n);
 char    *ft_strchr(const char *s, int c);
 int		ft_atoi(const char *str1);
 
-// ...
 char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
-//
+
 char	*ft_strupcase(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t number, size_t size);
@@ -47,7 +44,6 @@ int		ft_printf(const char *format, ...);
 int		ft_parser(va_list ap, const char *format, t_spec *spec);
 
 // handler.c
-
 int		ft_handlers_hub(va_list ap, t_spec spec);
 int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus);
 int		ft_spec_out(const char **format, t_spec spec);
