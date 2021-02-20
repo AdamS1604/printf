@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:42:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:09:18 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 01:00:29 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int				ft_handler_p(va_list ap, t_spec spec);
 int				ft_handler_x(va_list ap, t_spec spec);
 int				ft_handler_d(va_list ap, t_spec spec);
 int				ft_num_str_out(t_spec spec, char **str, int minus);
+int				ft_printf(const char *format, ...);
 
 #endif
