@@ -6,12 +6,13 @@
 #    By: abronn <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/20 20:00:28 by abronn            #+#    #+#              #
-#    Updated: 2021/02/20 20:44:40 by abronn           ###   ########.fr        #
+#    Updated: 2021/02/21 01:36:59 by abronn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 OBJDIR = obj
 SRCDIR = src
+INCLUDESDIR = includes
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
@@ -38,10 +39,11 @@ OBJS		=	$(OBJDIR)/ft_printf.o  \
 				$(OBJDIR)/utils_p.o
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) $(CFLAGS) -I $(INCLUDESDIR) -c $< -o $@
 
 $(NAME):	$(OBJS)
 			@ar rcs $(NAME) $(OBJS)
+			@make clean
 		
 all:		$(NAME)
 
