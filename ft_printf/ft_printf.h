@@ -48,8 +48,8 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec);
 
 // handler.c
 
-int		ft_ap_handler_hub(va_list ap, t_spec spec);
+int		ft_handlers_hub(va_list ap, t_spec spec);
 int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus);
-int		ft_format_out(const char **format, t_spec spec);
+int		ft_spec_out(const char **format, t_spec spec);
 
 #endif

@@ -99,7 +99,7 @@ int		ft_handler_x(va_list ap, t_spec spec)
 		return (ft_num_str_out(ap, spec, &str, 0));
 }
 
-int		ft_handler_di(va_list ap, t_spec spec)
+int		ft_handler_d(va_list ap, t_spec spec)
 {
 	int		nbr;
 	int		minus;
@@ -124,7 +124,7 @@ int		ft_handler_di(va_list ap, t_spec spec)
 		return (ft_num_str_out(ap, spec, &str, minus));
 }
 
-int		ft_ap_handler_hub(va_list ap, t_spec spec)
+int		ft_handlers_hub(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c')
 		return (ft_handler_c(ap, spec));
@@ -137,11 +137,13 @@ int		ft_ap_handler_hub(va_list ap, t_spec spec)
 	if ((spec.type == 'x') || (spec.type == 'X'))
 		return (ft_handler_x(ap, spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
-		return (ft_handler_di(ap, spec));
+		return (ft_handler_d(ap, spec));
 	if (spec.type == '%')
 		return (ft_putchar('%'));
 	return (0);
 }
+
+// num str out
 
 void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
 {
@@ -178,6 +180,8 @@ int		ft_num_str_out(va_list ap, t_spec spec, char **str, int minus)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
+// spec out
+
 int		ft_util_dot_out(t_spec spec, const char **format)
 {
 	char	len;
@@ -201,7 +205,7 @@ int		ft_util_dot_out(t_spec spec, const char **format)
 	return (len);
 }
 
-int		ft_format_out(const char **format, t_spec spec)
+int		ft_spec_out(const char **format, t_spec spec)
 {
 	int len;
 	int tmp;
