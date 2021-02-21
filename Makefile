@@ -65,6 +65,7 @@ $(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "$(YELLOW)ft_printf:$(RESET) $(GREEN)$(NAME) was created.$(RESET)"
 		
 clean:
+	@make -C $(LIBFT_DIR) clean
 	@rm -frd $(OBJ_DIR)
 	@echo "$(YELLOW)ft_printf:$(RESET) $(RED)/obj folder was deleted.$(RESET)"
 
