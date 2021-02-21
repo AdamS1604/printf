@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:42:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:16:55 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 00:40:55 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ int				ft_handler_u(va_list ap, t_spec spec);
 int				ft_handler_p(va_list ap, t_spec spec);
 int				ft_handler_x(va_list ap, t_spec spec);
 int				ft_handler_d(va_list ap, t_spec spec);
-char			*ft_str_add_accuracy(t_spec spec, char *nbr_str);
+
 int				ft_spec_out(const char **format, t_spec spec);
+
+char			*ft_str_add_accuracy(t_spec spec, char *nbr_str);
 int				ft_num_str_out(t_spec spec, char **str, int minus);
+
 int				ft_parser(va_list ap, const char *format, t_spec *spec);
+
 int				ft_printf(const char *format, ...);
 
 #endif
