@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:14:45 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:44:17 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 23:00:03 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int		ft_handler_c(va_list ap, t_spec spec)
 {
 	if (spec.flag == '-')
-		ft_putchar(va_arg(ap, int));
+		ft_putchar_fd(va_arg(ap, int), 1);
 	if (spec.width != 0)
 		ft_print_char_times(spec.width - 1, ' ');
 	if (spec.flag != '-')
-		ft_putchar(va_arg(ap, int));
+		ft_putchar_fd(va_arg(ap, int), 1);
 	return ((spec.width != 0) ? spec.width : 1);
 }
 
@@ -73,10 +73,10 @@ int		ft_util_dot_out(t_spec spec, const char **format)
 	len = 0;
 	if ((*((*format) + 1) == '*') || (*((*format) + 1) == '-'))
 	{
-		len += ft_putchar('.');
+		len += ft_putchar_fd('.' , 1);
 		if (*((*format) + 1) == '-')
-			len += ft_putchar('0');
-		ft_putnbr(spec.accuracy);
+			len += ft_putchar_fd('0', 1);
+		ft_putnbr_fd(spec.accuracy, 1);
 		tmp = ft_get_nbr_len(spec.accuracy, 10);
 		len += tmp;
 		(*format) += tmp;
@@ -84,7 +84,7 @@ int		ft_util_dot_out(t_spec spec, const char **format)
 	else if (*((*format) + 1) == '\0')
 		return (-1);
 	else
-		len += ft_putchar(**format);
+		len += ft_putchar_fd(**format, 1);
 	return (len);
 }
 
@@ -93,16 +93,16 @@ int		ft_spec_out(const char **format, t_spec spec)
 	int len;
 	int tmp;
 
-	len = ft_putchar('%');
+	len = ft_putchar_fd('%', 1);
 	if (**format == ' ')
-		len += ft_putchar(' ');
+		len += ft_putchar_fd(' ', 1);
 	while (**format == ' ')
 		(*format)++;
 	while (**format != '\0')
 	{
 		if (**format == '*')
 		{
-			ft_putnbr(spec.width);
+			ft_putnbr_fd(spec.width, 1);
 			len += ft_get_nbr_len(spec.width, 10);
 		}
 		else if (**format == '.')
@@ -111,7 +111,7 @@ int		ft_spec_out(const char **format, t_spec spec)
 			else
 				len += tmp;
 		else
-			len += ft_putchar(**format);
+			len += ft_putchar_fd(**format, 1);
 		(*format)++;
 	}
 	return (len);

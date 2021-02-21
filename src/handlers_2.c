@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:14:48 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/21 00:53:08 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 22:55:27 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
 	else
 		ft_print_char_times(spec.width - str_len, ' ');
 	if ((minus == 1) && (spec.flag == '_'))
-		ft_putchar('-');
+		ft_putchar_fd('-', 1);
 	if (spec.flag != '-')
 		ft_putstr_len(str_len, str);
 }
@@ -104,10 +104,10 @@ int		ft_num_str_out(t_spec spec, char **str, int minus)
 		spec.flag = '_';
 	if (((minus == 1) && (spec.flag != '_')) ||
 	((minus == 1) && (spec.width <= str_len)))
-		ft_putchar('-');
+		ft_putchar_fd('-', 1);
 	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
 	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
-		str_len += ft_putchar(' ');
+		str_len += ft_putchar_fd(' ', 1);
 	if (spec.width > str_len)
 		ft_util_width_out(spec, *str, str_len, minus);
 	else
