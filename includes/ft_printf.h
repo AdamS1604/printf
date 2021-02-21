@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:42:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/21 23:12:06 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 23:26:32 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
+# include "libft.h"
 
 typedef	struct	s_spec
 {
