@@ -11,38 +11,38 @@
 # **************************************************************************** #
 
 # DIRECTORIES
-OBJ_DIR 	= obj
-SRC_DIR 	= src
-INCLUDESDIR = includes
-LIBFT_DIR 	= libft
-HANDLERS 	= handlers
+OBJ_DIR 		= obj
+SRC_DIR 		= src
+INCLUDESDIR 	= includes
+LIBFT_DIR 		= libft
+HANDLERS_DIR	= handlers
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
-NAME		= libftprintf.a
-LIBFT		= libft.a
+CC				= gcc
+CFLAGS			= -Wall -Wextra -Werror
+NAME			= libftprintf.a
+LIBFT			= libft.a
 
 # SOURCES
-SRCS	=	$(SRC_DIR)/ft_printf.c 		\
-			$(SRC_DIR)/ft_handler_c.c	\
-			$(SRC_DIR)/ft_handler_s.c	\
-			$(SRC_DIR)/ft_handler_u.c	\
-			$(SRC_DIR)/ft_handler_d.c	\
-			$(SRC_DIR)/ft_handler_p.c	\
-			$(SRC_DIR)/ft_handler_x.c	\
-			$(SRC_DIR)/parser.c			\
-			$(SRC_DIR)/utils.c
+SRCS	=	$(SRC_DIR)/ft_printf.c 						\
+			$(SRC_DIR)/parser.c							\
+			$(SRC_DIR)/utils.c							\
+			$(SRC_DIR)/$(HANDLERS_DIR)/ft_handler_c.c	\
+			$(SRC_DIR)/$(HANDLERS_DIR)/ft_handler_s.c	\
+			$(SRC_DIR)/$(HANDLERS_DIR)/ft_handler_u.c	\
+			$(SRC_DIR)/$(HANDLERS_DIR)/ft_handler_d.c	\
+			$(SRC_DIR)/$(HANDLERS_DIR)/ft_handler_p.c	\
+			$(SRC_DIR)/$(HANDLERS_DIR)/ft_handler_x.c	
 
 # OBJECTS
-OBJS	=	$(OBJ_DIR)/ft_printf.o  	\
-			$(OBJ_DIR)/ft_handler_c.o  	\
-			$(OBJ_DIR)/ft_handler_s.o  	\
-			$(OBJ_DIR)/ft_handler_u.o  	\
-			$(OBJ_DIR)/ft_handler_d.o  	\
-			$(OBJ_DIR)/ft_handler_p.o  	\
-			$(OBJ_DIR)/ft_handler_x.o  	\
-			$(OBJ_DIR)/parser.o     	\
-			$(OBJ_DIR)/utils.o
+OBJS	=	$(OBJ_DIR)/ft_printf.o  					\
+			$(OBJ_DIR)/parser.o     					\
+			$(OBJ_DIR)/utils.o							\
+			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_c.o  	\
+			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_s.o  	\
+			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_u.o  	\
+			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_d.o  	\
+			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_p.o  	\
+			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_x.o  	
 
 # COLORS
 GREEN	= \033[0;32m
@@ -53,6 +53,7 @@ RESET	= \033[0m
 all: $(NAME)
 
 $(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
