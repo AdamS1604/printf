@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/21 00:52:43 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 22:53:33 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_handlers_hub(va_list ap, t_spec spec)
 	if ((spec.type == 'd') || (spec.type == 'i'))
 		return (ft_handler_d(ap, spec));
 	if (spec.type == '%')
-		return (ft_putchar('%'));
+		return (ft_putchar_fd('%', 1));
 	return (0);
 }
 
@@ -63,7 +63,7 @@ int		ft_print_all(va_list ap, const char *format)
 			else
 				len += tmp;
 		else
-			len += ft_putchar(*(format++));
+			len += ft_putchar_fd(*(format++), 1);
 	return (len);
 }
 

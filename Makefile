@@ -59,8 +59,6 @@ $(NAME)			:	$(OBJ_DIR) $(OBJS)
 				@ar rcs $(NAME) $(OBJS)
 				@echo "$(YELLOW)ft_printf:$(RESET) $(GREEN)$(NAME) was created.$(RESET)"
 		
-
-
 clean			:
 				@rm -frd $(OBJ_DIR)
 				@echo "$(YELLOW)ft_printf:$(RESET) $(RED)/obj folder was deleted.$(RESET)"

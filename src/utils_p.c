@@ -6,67 +6,11 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:43:47 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/21 23:12:35 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int		ft_zero_len(const char *format)
-{
-	int len;
-
-	len = 0;
-	while (*format == '0')
-	{
-		format++;
-		len++;
-	}
-	return (len);
-}
-
-int		ft_print_char_times(int i, char c)
-{
-	int len;
-
-	len = i;
-	while (i-- > 0)
-		ft_putchar(c);
-	return (len);
-}
-
-int		ft_get_nbr_len(int nbr, int base)
-{
-	int len;
-	int flag;
-
-	len = 0;
-	flag = 0;
-	if (nbr == 0)
-		return (1);
-	if (nbr < 0)
-		flag++;
-	while (nbr)
-	{
-		len++;
-		nbr /= base;
-	}
-	if (flag)
-		len++;
-	return (len);
-}
-
-int		ft_putstr_len(int len, char *s)
-{
-	int		i;
-	int		str_len;
-
-	i = 0;
-	str_len = ft_strlen(s);
-	while ((len > i) && (str_len--))
-		ft_putchar(s[i++]);
-	return (i);
-}
 
 char	*ft_str_add_accuracy(t_spec spec, char *nbr_str)
 {
