@@ -54,7 +54,7 @@ all: $(NAME)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/$(HANDLERS_DIR)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -I $(INCLUDESDIR) -c $< -o $@
