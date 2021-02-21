@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:17:03 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 00:37:49 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		ft_util_dot_out(t_spec spec, const char **format)
 	len = 0;
 	if ((*((*format) + 1) == '*') || (*((*format) + 1) == '-'))
 	{
-		len += ft_putchar_fd('.' , 1);
+		len += ft_putchar_fd('.', 1);
 		if (*((*format) + 1) == '-')
 			len += ft_putchar_fd('0', 1);
 		ft_putnbr_fd(spec.accuracy, 1);
