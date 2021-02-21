@@ -45,15 +45,18 @@ RED			= \033[0;31m
 
 RESET		= \033[0m
 
-$(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c
+all				:	$(NAME)
+
+$(OBJ_DIR):
 				@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c
 				@$(CC) $(CFLAGS) -I $(INCLUDESDIR) -c $< -o $@
 
-$(NAME)			:	$(OBJS)
+$(NAME)			:	$(OBJ_DIR) $(OBJS)
 				@ar rcs $(NAME) $(OBJS)
 				@echo "ft_printf: $(GREEN) $(NAME) was created.$(RESET)"
 		
-all				:	$(NAME)
 
 
 clean			:
