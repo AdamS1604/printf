@@ -1,68 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handlers_1.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/20 19:14:45 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/21 23:00:03 by abronn           ###   ########.fr       */
+/*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
+/*   Updated: 2021/02/22 00:17:03 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_handler_c(va_list ap, t_spec spec)
+void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
 {
 	if (spec.flag == '-')
-		ft_putchar_fd(va_arg(ap, int), 1);
-	if (spec.width != 0)
-		ft_print_char_times(spec.width - 1, ' ');
-	if (spec.flag != '-')
-		ft_putchar_fd(va_arg(ap, int), 1);
-	return ((spec.width != 0) ? spec.width : 1);
-}
-
-int		ft_handler_s(va_list ap, t_spec spec)
-{
-	char	*str;
-	int		str_len;
-
-	str = va_arg(ap, char*);
-	if (str == 0)
-	{
-		if ((spec.accuracy >= 6) || (spec.accuracy <= -1))
-			str = "(null)";
-		else
-			str = "";
-	}
-	str_len = ft_strlen(str);
-	if ((spec.accuracy < str_len) && (spec.accuracy > -1))
-		str_len = spec.accuracy;
-	if (spec.flag == '-')
 		ft_putstr_len(str_len, str);
-	if (spec.width != 0)
-		ft_print_char_times(spec.width - str_len, ' ');
-	if (spec.flag != '-')
-		ft_putstr_len(str_len, str);
-	return ((str_len > spec.width) ? str_len : spec.width);
-}
-
-int		ft_handler_u(va_list ap, t_spec spec)
-{
-	unsigned int	nbr;
-	char			*str;
-
-	nbr = va_arg(ap, unsigned int);
-	if ((nbr == 0) && (spec.accuracy != -1))
-		str = ft_strdup("");
+	if ((spec.flag == '0') && (spec.accuracy < 0))
+		ft_print_char_times(spec.width - str_len, '0');
 	else
-		str = ft_itoa_u(nbr, 10, 0);
-	if (str == 0)
-		return (-1);
-	if (!(str = ft_str_add_accuracy(spec, str)))
-		return (-1);
-	return (ft_num_str_out(spec, &str, 0));
+		ft_print_char_times(spec.width - str_len, ' ');
+	if ((minus == 1) && (spec.flag == '_'))
+		ft_putchar_fd('-', 1);
+	if (spec.flag != '-')
+		ft_putstr_len(str_len, str);
+}
+
+int		ft_num_str_out(t_spec spec, char **str, int minus)
+{
+	int str_len;
+
+	str_len = ft_strlen(*str) + minus;
+	if ((spec.flag == '0') && (spec.accuracy > -1))
+		spec.flag = '_';
+	if (((minus == 1) && (spec.flag != '_')) ||
+	((minus == 1) && (spec.width <= str_len)))
+		ft_putchar_fd('-', 1);
+	if (((minus != 1) && (spec.width <= str_len) && (spec.space == 1)) ||
+	((spec.space == 1) && (spec.flag != '_') && (minus != 1)))
+		str_len += ft_putchar_fd(' ', 1);
+	if (spec.width > str_len)
+		ft_util_width_out(spec, *str, str_len, minus);
+	else
+		ft_putstr_len(str_len, *str);
+	free(*str);
+	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
 int		ft_util_dot_out(t_spec spec, const char **format)
@@ -115,4 +97,31 @@ int		ft_spec_out(const char **format, t_spec spec)
 		(*format)++;
 	}
 	return (len);
+}
+
+char	*ft_str_add_accuracy(t_spec spec, char *nbr_str)
+{
+	int		nbr_len;
+	char	*new_str;
+	char	*tmp;
+	int		i;
+	int		k;
+
+	if (nbr_str == 0)
+		return (0);
+	nbr_len = ft_strlen(nbr_str);
+	if (spec.accuracy > nbr_len)
+	{
+		i = spec.accuracy - nbr_len;
+		k = 0;
+		if (!(new_str = (char *)ft_calloc(spec.accuracy + 1, sizeof(char))))
+			return (0);
+		while (i--)
+			new_str[k++] = '0';
+		tmp = nbr_str;
+		nbr_str = ft_strjoin(new_str, nbr_str);
+		free(tmp);
+		free(new_str);
+	}
+	return (nbr_str);
 }

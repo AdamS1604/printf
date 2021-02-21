@@ -10,6 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
+# DIRECTRIES
 SRC_DIR = src
 INC_DIR = ../includes
 OBJ_DIR = obj
@@ -18,6 +19,7 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra
 NAME = libft.a
 
+# SOURCES
 SRC = 	$(SRC_DIR)/ft_split.c 		\
 		$(SRC_DIR)/ft_strtrim.c 	\
 		$(SRC_DIR)/ft_strmapi.c 	\
@@ -59,6 +61,7 @@ SRC = 	$(SRC_DIR)/ft_split.c 		\
 		$(SRC_DIR)/ft_get_nbr_len.c \
 		$(SRC_DIR)/ft_zero_len.c \
 
+# OBJECTS
 OBJ = 	$(OBJ_DIR)/ft_split.o 		\
 		$(OBJ_DIR)/ft_strtrim.o 	\
 		$(OBJ_DIR)/ft_strmapi.o 	\
@@ -100,12 +103,10 @@ OBJ = 	$(OBJ_DIR)/ft_split.o 		\
 		$(OBJ_DIR)/ft_get_nbr_len.o \
 		$(OBJ_DIR)/ft_zero_len.o \
 
+# COLORS
 GREEN		= \033[0;32m
-
 YELLOW		= \033[0;33m
-
 RED			= \033[0;31m
-
 RESET		= \033[0m
 
 all: $(NAME)
@@ -119,7 +120,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(NAME): $(OBJ_DIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 	@echo "$(YELLOW)libft    :$(RESET) $(GREEN)$(NAME) was created.$(RESET)"
-
 
 clean:
 	@rm -frd $(OBJ_DIR)
