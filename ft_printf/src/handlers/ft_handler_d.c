@@ -6,19 +6,17 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 23:54:48 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:15:01 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 17:23:16 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_handler_d(va_list ap, t_spec spec)
+int		ft_handler_d(int nbr, t_spec spec)
 {
-	int		nbr;
 	int		minus;
 	char	*str;
 
-	nbr = va_arg(ap, int);
 	minus = 0;
 	if (nbr < 0)
 	{

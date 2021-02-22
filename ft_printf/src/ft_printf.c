@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 12:01:03 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 17:23:21 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int		ft_handlers_hub(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c')
-		return (ft_handler_c(ap, spec));
+		return (ft_handler_c(va_arg(ap, int), spec));
 	if (spec.type == 's')
-		return (ft_handler_s(ap, spec));
+		return (ft_handler_s(va_arg(ap, char*), spec));
 	if (spec.type == 'u')
-		return (ft_handler_u(ap, spec));
+		return (ft_handler_u(va_arg(ap, unsigned int), spec));
 	if (spec.type == 'p')
-		return (ft_handler_p(ap, spec));
+		return (ft_handler_p(va_arg(ap, unsigned long long), spec));
 	if ((spec.type == 'x') || (spec.type == 'X'))
-		return (ft_handler_x(ap, spec));
+		return (ft_handler_x(va_arg(ap, unsigned int), spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
-		return (ft_handler_d(ap, spec));
+		return (ft_handler_d(va_arg(ap, int), spec));
 	if (spec.type == '%')
 		return (ft_putchar_fd('%', 1));
 	return (0);

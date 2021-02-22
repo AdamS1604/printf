@@ -6,19 +6,17 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 23:54:53 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:14:38 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 17:22:17 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_handler_p(va_list ap, t_spec spec)
+int		ft_handler_p(unsigned long long nbr, t_spec spec)
 {
-	unsigned long long	nbr;
 	char				*str;
 	char				*tmp;
 
-	nbr = va_arg(ap, unsigned long long);
 	if (nbr == 0)
 		str = ft_strdup("(nil)");
 	else

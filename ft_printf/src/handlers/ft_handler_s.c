@@ -6,18 +6,16 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 23:54:58 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:11:25 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 17:18:28 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_handler_s(va_list ap, t_spec spec)
+int		ft_handler_s(char *str, t_spec spec)
 {
-	char	*str;
 	int		str_len;
 
-	str = va_arg(ap, char*);
 	if (str == 0)
 	{
 		if ((spec.accuracy >= 6) || (spec.accuracy <= -1))
