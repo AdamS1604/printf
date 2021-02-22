@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/21 22:53:33 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 11:40:29 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int		ft_main_hub(va_list ap, const char **format)
 	else if (parse > 0)
 		len = ft_spec_out(format, spec);
 	else if ((parse *= -1) > 0)
+	{
+		(*format) += parse;
 		len = ft_handlers_hub(ap, spec);
-	(*format) += parse;
+	}
 	return ((len < 0) ? -1 : len);
 }
 
