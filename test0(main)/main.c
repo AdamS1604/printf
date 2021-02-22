@@ -8,19 +8,19 @@ void	ft_test(char *str)
 
 	// standart
 	printf("OUT: ");
-	j = printf(str, 345, 12);
+	j = printf(str, 0);
 	printf(" | RETURN: %d", j);
 	printf("\n");
 
 	// my
 	ft_printf("OUT: ");
-	i = ft_printf(str, 345, 12);
+	i = ft_printf(str, 0);
 	printf(" | RETURN: %d", i);
 	printf("\n");
 }
 
 int		main(void)
 {
-	ft_test("%d %10d");
+	ft_test("%.p");
     return (0);
 }
