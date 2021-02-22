@@ -60,19 +60,19 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -I $(INCLUDESDIR) -c $< -o $@
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	@make -C $(LIBFT_DIR)
+	@make -s -C $(LIBFT_DIR)
 	@cp $(LIBFT_DIR)/$(LIBFT) $(NAME)
 	@ar rcs $(NAME) $(OBJS)
 	@echo "$(YELLOW)ft_printf:$(RESET) $(GREEN)$(NAME) was created.$(RESET)"
 		
 clean:
-	@make -C $(LIBFT_DIR) clean
 	@rm -frd $(OBJ_DIR)
+	@make -s -C $(LIBFT_DIR) clean
 	@echo "$(YELLOW)ft_printf:$(RESET) $(RED)/obj folder was deleted.$(RESET)"
 
 fclean:	clean
-	@make -C $(LIBFT_DIR) fclean
 	@rm -rf $(NAME)
 	@echo "$(YELLOW)ft_printf:$(RESET) $(RED)$(NAME) was deleted.$(RESET)"
+	@make -s -C $(LIBFT_DIR) fclean
 
 re:	fclean all
