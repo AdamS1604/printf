@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:37:49 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 16:39:41 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,55 +47,15 @@ int		ft_num_str_out(t_spec spec, char **str, int minus)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-int		ft_util_dot_out(t_spec spec, const char **format)
-{
-	char	len;
-	int		tmp;
-
-	len = 0;
-	if ((*((*format) + 1) == '*') || (*((*format) + 1) == '-'))
-	{
-		len += ft_putchar_fd('.', 1);
-		if (*((*format) + 1) == '-')
-			len += ft_putchar_fd('0', 1);
-		ft_putnbr_fd(spec.accuracy, 1);
-		tmp = ft_get_nbr_len(spec.accuracy, 10);
-		len += tmp;
-		(*format) += tmp;
-	}
-	else if (*((*format) + 1) == '\0')
-		return (-1);
-	else
-		len += ft_putchar_fd(**format, 1);
-	return (len);
-}
-
 int		ft_spec_out(const char **format, t_spec spec)
 {
 	int len;
-	int tmp;
 
-	len = ft_putchar_fd('%', 1);
-	if (**format == ' ')
-		len += ft_putchar_fd(' ', 1);
-	while (**format == ' ')
-		(*format)++;
-	while (**format != '\0')
-	{
-		if (**format == '*')
-		{
-			ft_putnbr_fd(spec.width, 1);
-			len += ft_get_nbr_len(spec.width, 10);
-		}
-		else if (**format == '.')
-			if ((tmp = ft_util_dot_out(spec, format)) == -1)
-				return (-1);
-			else
-				len += tmp;
-		else
-			len += ft_putchar_fd(**format, 1);
-		(*format)++;
-	}
+	len = 0;
+	spec.width--;
+	len += ft_handler_s("", spec);
+	if (*(*format - 1) == '%')
+		len += ft_putchar_fd('%', 1);
 	return (len);
 }
 

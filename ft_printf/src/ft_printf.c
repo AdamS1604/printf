@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 12:01:03 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 16:50:45 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 int		ft_handlers_hub(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c')
-		return (ft_handler_c(ap, spec));
+		return (ft_handler_c(va_arg(ap, int), spec));
 	if (spec.type == 's')
-		return (ft_handler_s(ap, spec));
+		return (ft_handler_s(va_arg(ap, char*), spec));
 	if (spec.type == 'u')
-		return (ft_handler_u(ap, spec));
+		return (ft_handler_u(va_arg(ap, unsigned int), spec));
 	if (spec.type == 'p')
-		return (ft_handler_p(ap, spec));
+		return (ft_handler_p(va_arg(ap, unsigned long long), spec));
 	if ((spec.type == 'x') || (spec.type == 'X'))
-		return (ft_handler_x(ap, spec));
+		return (ft_handler_x(va_arg(ap, unsigned int), spec));
 	if ((spec.type == 'd') || (spec.type == 'i'))
-		return (ft_handler_d(ap, spec));
-	if (spec.type == '%')
-		return (ft_putchar_fd('%', 1));
+		return (ft_handler_d(va_arg(ap, int), spec));
 	return (0);
 }
 
@@ -36,10 +34,12 @@ int		ft_main_hub(va_list ap, const char **format)
 	int		parse;
 	t_spec	spec;
 
-	if ((parse = ft_parser(ap, ++(*format), &spec)) == 0)
-		return (-1);
-	else if (parse > 0)
+	parse = ft_parser(ap, ++(*format), &spec);
+	if (parse > 0)
+	{
+		(*format) += parse;
 		return (ft_spec_out(format, spec));
+	}
 	(*format) += parse * -1;
 	return (ft_handlers_hub(ap, spec));
 }
@@ -52,8 +52,7 @@ int		ft_print_all(va_list ap, const char *format)
 	len = 0;
 	while (*format)
 		if ((*format == '%'))
-			if ((*(format + 1) == '\0') ||
-			((tmp = ft_main_hub(ap, &format)) == -1))
+			if ((tmp = ft_main_hub(ap, &format)) == -1)
 				return (-1);
 			else
 				len += tmp;

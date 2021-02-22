@@ -6,18 +6,16 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 23:55:04 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 00:11:35 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 16:48:14 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_handler_u(va_list ap, t_spec spec)
+int		ft_handler_u(unsigned int nbr, t_spec spec)
 {
-	unsigned int	nbr;
 	char			*str;
 
-	nbr = va_arg(ap, unsigned int);
 	if ((nbr == 0) && (spec.accuracy != -1))
 		str = ft_strdup("");
 	else

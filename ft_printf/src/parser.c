@@ -6,7 +6,7 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:00:35 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:08:25 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/22 16:34:54 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ int		ft_parser(va_list ap, const char *format, t_spec *spec)
 	else if (a_len < 0)
 		return (len + 1);
 	len += a_len;
-	if (ft_strchr("diucspxX%", *format))
+	if (ft_strchr("diucspxX", *format))
 		spec->type = *format;
-	else if ((*(format + 1)) == '\0')
-		return (0);
 	return ((spec->type == '_') ? (len + 1) : ((len + 1) * -1));
 }
