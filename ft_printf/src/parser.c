@@ -6,13 +6,13 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:00:35 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/20 20:08:25 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/23 13:52:55 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_init_spec(t_spec **spec)
+static void	ft_init_spec(t_spec **spec)
 {
 	(*spec)->flag = '_';
 	(*spec)->space = 0;
@@ -21,7 +21,7 @@ void	ft_init_spec(t_spec **spec)
 	(*spec)->type = '_';
 }
 
-int		ft_flags_parser(const char **format, t_spec **spec)
+static int	ft_flags_parser(const char **format, t_spec **spec)
 {
 	int len;
 
@@ -40,7 +40,7 @@ int		ft_flags_parser(const char **format, t_spec **spec)
 	return (len);
 }
 
-int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
+static int	ft_width_parser(va_list ap, const char **format, t_spec **spec)
 {
 	int len;
 	int num;
@@ -63,7 +63,7 @@ int		ft_width_parser(va_list ap, const char **format, t_spec **spec)
 	return (len);
 }
 
-int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
+static int	ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 {
 	int len;
 	int num;
@@ -92,7 +92,7 @@ int		ft_accuracy_parser(va_list ap, const char **format, t_spec **spec)
 	return (len);
 }
 
-int		ft_parser(va_list ap, const char *format, t_spec *spec)
+int			ft_parser(va_list ap, const char *format, t_spec *spec)
 {
 	int len;
 	int a_len;
