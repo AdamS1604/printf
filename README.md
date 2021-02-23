@@ -9,6 +9,7 @@ For macOS use branch macos.
 2. different invaling spec handling:
    - (linux -> just output spec how it is)
    - (macos -> output width and flags no matter what)
+3. percent handling
 
 ## TESTS
 1. test1 - [ft_printf_tester](https://github.com/romslf/ft_printf_tester)
