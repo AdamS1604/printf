@@ -6,13 +6,13 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 01:10:36 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/23 12:21:55 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/23 13:49:18 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		ft_handlers_hub(va_list ap, t_spec spec)
+static int			ft_handlers_hub(va_list ap, t_spec spec)
 {
 	if (spec.type == 'c')
 		return (ft_handler_c(va_arg(ap, int), spec));
@@ -29,7 +29,7 @@ static int		ft_handlers_hub(va_list ap, t_spec spec)
 	return (0);
 }
 
-static int		ft_main_hub(va_list ap, const char **format)
+static int			ft_main_hub(va_list ap, const char **format)
 {
 	int		parse;
 	t_spec	spec;
@@ -44,7 +44,7 @@ static int		ft_main_hub(va_list ap, const char **format)
 	return (ft_handlers_hub(ap, spec));
 }
 
-static int		ft_print_all(va_list ap, const char *format)
+static int			ft_print_all(va_list ap, const char *format)
 {
 	int len;
 	int tmp;
@@ -61,7 +61,7 @@ static int		ft_print_all(va_list ap, const char *format)
 	return (len);
 }
 
-int				ft_printf(const char *format, ...)
+int					ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		len;
