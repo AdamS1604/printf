@@ -45,10 +45,11 @@ OBJS	=	$(OBJ_DIR)/ft_printf.o  					\
 			$(OBJ_DIR)/$(HANDLERS_DIR)/ft_handler_x.o  	
 
 # COLORS
-GREEN	= \033[0;32m
-YELLOW	= \033[0;33m
-RED		= \033[0;31m
-RESET	= \033[0m
+GREEN	= \e[32m
+YELLOW	= \e[33m
+RED		= \e[31m
+PURPLE	= \e[35m
+NC		= \e[39m
 
 all: $(NAME)
 
@@ -58,21 +59,22 @@ $(OBJ_DIR):
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -I $(INCLUDESDIR) -c $< -o $@
+	@printf "$(PURPLE)compiling$(NC): %-28s ->  %-28s\n" $< $@
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@make -s -C $(LIBFT_DIR)
 	@cp $(LIBFT_DIR)/$(LIBFT) $(NAME)
 	@ar rcs $(NAME) $(OBJS)
-	@echo "$(YELLOW)ft_printf:$(RESET) $(GREEN)$(NAME) was created.$(RESET)"
+	@echo "$(YELLOW)ft_printf:$(NC) $(GREEN)$(NAME) was created.$(NC)"
 		
 clean:
 	@rm -frd $(OBJ_DIR)
 	@make -s -C $(LIBFT_DIR) clean
-	@echo "$(YELLOW)ft_printf:$(RESET) $(RED)/obj folder was deleted.$(RESET)"
+	@echo "$(YELLOW)ft_printf:$(NC) $(RED)/obj folder was deleted.$(NC)"
 
 fclean:	clean
 	@rm -rf $(NAME)
-	@echo "$(YELLOW)ft_printf:$(RESET) $(RED)$(NAME) was deleted.$(RESET)"
+	@echo "$(YELLOW)ft_printf:$(NC) $(RED)$(NAME) was deleted.$(NC)"
 	@make -s -C $(LIBFT_DIR) fclean
 
 re:	fclean all
