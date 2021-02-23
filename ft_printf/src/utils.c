@@ -6,13 +6,13 @@
 /*   By: abronn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:34:32 by abronn            #+#    #+#             */
-/*   Updated: 2021/02/22 16:39:41 by abronn           ###   ########.fr       */
+/*   Updated: 2021/02/23 12:23:48 by abronn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
+static void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
 {
 	if (spec.flag == '-')
 		ft_putstr_len(str_len, str);
@@ -26,7 +26,7 @@ void	ft_util_width_out(t_spec spec, char *str, int str_len, int minus)
 		ft_putstr_len(str_len, str);
 }
 
-int		ft_num_str_out(t_spec spec, char **str, int minus)
+int			ft_num_str_out(t_spec spec, char **str, int minus)
 {
 	int str_len;
 
@@ -47,7 +47,7 @@ int		ft_num_str_out(t_spec spec, char **str, int minus)
 	return ((str_len > spec.width) ? str_len : spec.width);
 }
 
-int		ft_spec_out(const char **format, t_spec spec)
+int			ft_spec_out(const char **format, t_spec spec)
 {
 	int len;
 
@@ -59,7 +59,7 @@ int		ft_spec_out(const char **format, t_spec spec)
 	return (len);
 }
 
-char	*ft_str_add_accuracy(t_spec spec, char *nbr_str)
+char		*ft_str_add_accuracy(t_spec spec, char *nbr_str)
 {
 	int		nbr_len;
 	char	*new_str;
